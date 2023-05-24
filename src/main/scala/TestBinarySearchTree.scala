@@ -90,6 +90,7 @@ object TestBinarySearchTree extends App {
 
 /*
 a comment to explore git is working
+2nd comment for changing email in git config
  */
 
 /*
