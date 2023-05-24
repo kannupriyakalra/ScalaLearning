@@ -89,6 +89,11 @@ object TestBinarySearchTree extends App {
 }
 
 /*
+a comment to explore git is working
+ */
+
+/*
+
 Definition of binary search tree- All values in the left subtree are less than the current value. All values in the right subtree are greater than the current value.
 binary tree- normal tree without above constraint.
 
