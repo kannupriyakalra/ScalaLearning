@@ -4,7 +4,43 @@ object TestBinarySearchTree extends App {
 
   sealed trait Tree[+A] {
 
-    //Q- insert a element in a binary search tree, when element already exist we are not inserting the element
+    //run search on every element of tree, we have key and we need data of node that has both key, value.
+    //tree has elements of type A which satisfy bst property for A. A = K+V
+    //searchBy method is searching using function f.
+    // given a tree of type A, apply function f on A to get K ie key and compare that with key to be searched in tree k:K when k = key extracted from A ie tree node then for that node return element.
+    //it exactly same as contains. searchBy search the key ie sent if it exist in tree by first extracting key from each element of tree and then comparing with it and if the key matches returns
+    //the corresponding element A. ordering is sent of type K as we have to compare key types.
+    // check if tree contains key, if yes return that node else return none.
+    //here tree is of type A and we are converting A to K using f and searching for key that is coming with K.
+    def searchBy[K](f: A => K, k: K)(implicit ord: Ordering[K]): Option[A] = {//Option[A] here A is written as we want to find element from tree that looks like K ie why K written here searchBy[K]
+      this match {
+        case Empty => None //as tree is empty there is no element so return none.
+        case Node(value, left, right) =>
+          if (ord.equiv(k, f(value))) Some(value)
+          else if (ord.lt(k, f(value))) left.searchBy(f, k)
+          else right.searchBy(f, k)
+      }
+    }
+    //call this in get method, put methods s implementation is call insert
+    //search a element x in tree such that f(x)= k, find x?, x: A--we are searching a node that looks like small k, that node has some additional data other than k, we are interested in that.
+
+    //find k in tree but tree elements are of type A so we are first using function f to convert them to type K and then as k is of type K we ll compare with it and find if k exist in tree.
+    //searchBy[K]--here K is written as element k is of type K
+    //Option[A] - here A as tree s type is A and if we cant find anything ie tree is empty then A type will be returned.
+
+
+    // check if tree contains elem, if yes true else false.
+    def contains[B >: A](elem: B)(implicit ord: Ordering[B]): Boolean = {
+      this match { //doesn't compare with every element, on selected elements
+        case Empty => false
+        case Node(value, left, right) =>
+          if (ord.equiv(elem, value)) true
+          else if (ord.lt(elem, value)) left.contains(elem)
+          else right.contains(elem)
+      }
+    }
+
+    //Q- insert a element in a binary search tree, when element already exist we are not inserting the element(this is handled in line 13)
     def insert[B >: A](elem: B)(implicit ord: Ordering[B]): Tree[B] = { //ordering is sent to compare the value inside generic types ie A and B, here int ordering is going implicitly as insert is
       //called on Tree[Int], so inside Tree value are compared to know where to add element in tree while inserting.
       this match {
@@ -30,15 +66,15 @@ object TestBinarySearchTree extends App {
                 minimum(right: Tree[B]) //find minimum element on right subtree(as that is successor of root) using minimum method that returns an Option that has minimum value ie min and on that min value we called map as its wrapped in option
                   .map(min => Node(min, left, right.delete(min))) // to delete value we updated it with min and deleted min from right subtree, this map method is running on an option so changing its value and returning an option ie why we are adding getOrELse whose get is running and returning the value inside option. Map returns Option(node) and getOrElse is called on that Option
                   .getOrElse(Empty) //just to get rid of option type otherwise this is useless because right is not empty and minimum will return Some(min) value
-            }//we know right subtree is not empty as we are in case where left n right subtree exist, so getOrElse s else will not be called, getOrElse means if minimum value is found get is called otherwise else is called and an Empty node is created. for get case node is created in map and for that when get of getOrElse is called we return A and not Option[A] so we used this method to get rid of option.
-          }// // return type of min is Option[min], return type of map is Option[Node]
+            } //we know right subtree is not empty as we are in case where left n right subtree exist, so getOrElse s else will not be called, getOrElse means if minimum value is found get is called otherwise else is called and an Empty node is created. for get case node is created in map and for that when get of getOrElse is called we return A and not Option[A] so we used this method to get rid of option.
+          } // // return type of min is Option[min], return type of map is Option[Node]
           // return type of getOrElse is Node
           else if (ord.lt(elem, value)) Node(value, left.delete(elem), right) //if elem< value, get inside left subtree to find element
           else Node(value, left, right.delete(elem)) //if elem > value, get inside right subtree to find element
       }
     }
-//we have to delete a element whose left n right subtree is there so to delete it find minimum element on right subtree(as that is successor of root) using minimum method and replace it with
-// current element so current element gets deleted
+    //we have to delete a element whose left n right subtree is there so to delete it find minimum element on right subtree(as that is successor of root) using minimum method and replace it with
+    // current element so current element gets deleted
   }
 
   // minimum(right: Tree[B]) means calling minimum on right subtree and it returns minimum value from right subtree min: Option[A] ie a value of type A not entire node that has that value, that
@@ -52,7 +88,7 @@ object TestBinarySearchTree extends App {
         case Node(value, left, _) => minimum(left).orElse(Some(value))
       } //minimum value can exist in left subtree or current value, it cannot be right subtree so replaced it with _, called recursively minimum on left subtree by minimum(left), if it gets minimum
       //then return that else call orElse method and return the current value.
-    }//find min of a bst as its a bst min can be in left subtree only
+    } //find min of a bst as its a bst min can be in left subtree only
     //case Node(value, left, _) => minimum(left).orElse(Some(value))---_ means pattern match me vo value use ni krni hai, means dont compare right in pattern match as in the right side of => right is not used
     //recursively find min of left sub tree and if left subtree is empty it goes in OrElse and in that case answer is current value, so wrap that value in Some as OrElse take Option
     //minimum(left) returns Option[A], its None when left subtree is empty and in that case value is min value
@@ -86,6 +122,16 @@ object TestBinarySearchTree extends App {
   println(d2) //o/p- Empty
 
   println(Empty.insert(5).insert(7).insert(3).delete(5)) //o/p- Node(7,Node(3,Empty,Empty),Empty)
+
+  val m: Tree[(Int, String)] = Empty.insert((5, "hi"))
+  println(m) //Node((5,hi),Empty,Empty)
+
+  val x: Tree[(Int, String)] = Empty.insert((5, "hi")).insert((7, "hello")).insert((1, "one"))
+  println(x)
+  val y = x.searchBy(p => p._1, 7)
+  println(y)
+
+
 }
 
 /*

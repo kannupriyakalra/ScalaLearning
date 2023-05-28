@@ -1,4 +1,4 @@
-import scala.::
+import TestBinarySearchTree._
 
 object TestSet extends App {
 
@@ -38,6 +38,17 @@ object TestSet extends App {
     }
   }
 
+  //implementation of a Set using Binary Search Tree
+  case class MySetUsingBST[A](t: Tree[A] = Empty)(implicit ord: Ordering[A]) extends MySet[A]{
+    override def contains(elem: A): Boolean = t.contains(elem)
+
+    override def add(elem: A): MySet[A] = MySetUsingBST(t.insert(elem))//duplicate element case is handled in tree insert, we are creating a new object of MySetUsingBST as set is immutable, also as
+    //t.insert will return Tree[A] and we want to return a new set of type MySet
+
+    override def remove(elem: A): MySet[A] = MySetUsingBST(t.delete(elem))
+  }
+
+
   val x: MySet[Int] = MySetUsingList()
   println(x) //o/p- MySetUsingList(List())
   val y: MySet[Int] = x.add(5).add(6).add(7).add(5)
@@ -66,6 +77,21 @@ object TestSet extends App {
   println(add(8, y)) //o/p- MySetUsingList(List(8, 7, 6, 5))
 
 
+  val s: MySet[Int] = MySetUsingBST()
+  println(s) //o/p- MySetUsingBST(Empty)
+  val l: MySet[Int] = s.add(15)
+  println(l) //o/p- MySetUsingBST(Node(15,Empty,Empty))
+  val l1: MySet[Int] = l.add(10)
+  println(l1) //o/p- MySetUsingBST(Node(15,Node(10,Empty,Empty),Empty))
+  val l2: MySet[Int] = l1.add(5)
+  println(l2) //o/p- MySetUsingBST(Node(15,Node(10,Node(5,Empty,Empty),Empty),Empty))
+  println(l2.contains(5)) //o/p- true
+  println(l2.contains(20)) //o/p- false
+  println(s.contains(5)) //o/p- false, empty set doesn't contain element
+
+  println(l2.remove(20)) //o/p- MySetUsingBST(Node(15,Node(10,Node(5,Empty,Empty),Empty),Empty)), return same set as 20 doesn't exist
+  println(l2.remove(5)) //o/p- MySetUsingBST(Node(15,Node(10,Empty,Empty),Empty)) , removed 5
+  println(s.remove(5)) //o/p- MySetUsingBST(Empty), removing from empty set returns empty set
 }
 
 
@@ -156,6 +182,11 @@ MySetUsingList(List(10, 7, 6, 5)), elem=6
 case Nil => result--if while traversing list reach end then return result
 no need to reverse result as order of elements doesnt matter in set, so running remove tail recursive is reversing order of list here due to how we implemented it.
 
+
+implicit-
+when you remove "(implicit ord: Ordering[A])" from MySetUsingBST class, you ll get error in contains, add, remove methods that "No implicits found for parameter ord: Ordering[A]". When we
+are calling contains, add, remove methods then we are not explicitly sending ord parameter though it is expected in those methods, this is what implicit means that parameters can go implicitly without
+mentioning.
 
 
  */
