@@ -10,7 +10,17 @@ object TestFuture extends App {
     5
   }
 
-  val f2 = f1.map(a => a * 2) // map - Creates a new future by applying a function to the successful result of this future. f2 runs in a spearate new thread.
+  // a block of code is an example of Function 0.
+  /*
+  val f1: Future[Int] = Future.apply(body = {
+    println("Loading...")
+    Thread.sleep(1000)
+    println("I have computed a value")
+    5
+  })
+   */
+
+  val f2 = f1.map(a => a * 2) // map - Creates a new future by applying a function to the successful result of this future. f2 runs in a separate new thread.
   println(f2) //Future(<not completed>), it is still executing when we printed.
 
 
@@ -28,7 +38,8 @@ object TestFuture extends App {
   We printed f2 even before f1 got completely executed.
    */
 
-  val f3 = f2.flatMap(a => Future { //jab f2 k andar ki value mil jaygi thode der baad tab uspe chalega, jab int mil jaye on that call flatMap. f3 is a new thread getting made, as flatmap also has execution context in argument
+  val f3 = f2.flatMap(a => Future { // when we will get the value of f2 after some time, flatMap will be called on value inside f2 . f3 is a new thread getting made, as flatmap also has execution
+    // context in argument
     println("Inside Future f3")
     Thread.sleep(1000)
     2
@@ -41,7 +52,7 @@ object TestFuture extends App {
   Inside Future f3
   Future(Success(2))
 
-  o/p when i comment Thread.sleep(5000) in line 17 after f2-
+  o/p when i comment Thread.sleep(5000) in line 27 after f2-
   Loading...
   Future(<not completed>)
   Future(<not completed>)
@@ -52,8 +63,8 @@ object TestFuture extends App {
   Conclusion: we have to stop main thread from finishing so our 3 background thread can finish.
    */
 
-  f3.foreach(println) //function sent inside foreach will run on the o/p of f3 future, we passed the value computed inside f3 in println. Future has eventually one element when its computed.
- // f3.foreach(x => println) equivalent to line 55
+  f3.foreach(println) //on the o/p of future f3, function sent inside foreach will run. We passed the value computed inside f3 in println. Future has eventually one element when its computed.
+ // f3.foreach(x => println(x)) equivalent to line 66
   //foreach- Asynchronously processes the value in the future once the value becomes available. foreach runs the function sent on the value inside future.
   //o/p- 2
 
@@ -61,7 +72,7 @@ object TestFuture extends App {
   val f: Future[String] = Future {
     s + " future!"
   }
-  f foreach {  //equivalent to f.foreach, this is infix syntax (1 + 2 ), prefix (+12), postfix(12+), command click foreach its inside Future, ie when future f will complete n available successfuly,
+  f foreach {  //equivalent to f.foreach, this is infix syntax (1 + 2 ), prefix (+12), postfix(12+), command click foreach its inside Future, ie when future f will complete n available successfully,
     // then on its result foreach will be called, its like attaching a callback to future f after completion, no matter how much time it will take to complete, after that foreach will be called.
     msg => println(msg)
   }//o/p- Hello future!
@@ -69,6 +80,8 @@ object TestFuture extends App {
   //  , U is unit, as println s return type is unit, (f: T => U) will run on a separate thread and that thread will come from thread pool inside execution context, execution context creates a thread pool
   //and those threads are reused when they are free from execution. only see type signature and don't see how foreach is implemented in documentation.
 
+  //o/p of foreach is unit, the value printed by the function given in foreach ie println should not be considered as o/p of foreach ie the o/p of println function.
+  // foreach is like a listener when future f completes run the function on it ie given in foreach.
 
 //equivalent to above code
   val m: Future[String] = Future.apply( { //this is function0 ie no i/p to 1 o/p, function0 s syntax is block of code.
@@ -79,6 +92,13 @@ object TestFuture extends App {
       println(msg)
     }
   } //o/p- Hello future!
+
+  val o: Future[Unit] = Future.unit
+  val b: Future[Unit] = Future.successful(()) //equivalent to line 96
+
+  val expr = 5
+  val c: Future[Int] = Future.unit.map(_ => expr) //_ means unused input
+  val c1: Future[Int] = Future.unit.map(a => expr) //equivalent to line 100
 
 }
 
@@ -109,4 +129,8 @@ body is a function with no i/p and o/p T
 this is a function0, body is of type function0
  */
 
-//test commit
+//Monad- types implementing flatmap. map, flatmap is used for sequencing of operations. They convert types inside future from T to S.
+//Future has an instance of monad. Monad is a trait. Monad for a future exist, in future s companion object, object of monad trait exist.
+
+//asynchronous computation means computation will go ahead in background and you can go ahead and you ll be alerted later.
+
