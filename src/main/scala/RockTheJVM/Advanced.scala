@@ -1,5 +1,9 @@
 package RockTheJVM
 
+
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 /*
@@ -100,10 +104,74 @@ case e: Exception => "defend against this evil exception"
 Adding many layers of this try catch code like above will lead to very defensive code adding complexity to large code bases and making code almost unreadable which is why scala uses the Try pseudo
 collection from scala.util. val aTry = Try(methodWhichCanThrowException()) -- Try can wrap something like a method which can throw an exception. This "Try(methodWhichCanThrowException())" is a try
 object containing either a String if the method runs correctly or it contains the exception that was thrown by the method. So Try will essentially swallow the exception that might be thrown and wrap
-it in a regular value. You can pattern match the try object against the 2 subtypes of try which are Success(value) and Failure(exception). They are in scala.util.{Failure, Success, Try}. Success contains
-a valid value and failure contains an exception. So we use try to avoid defensiveness with Try Catches blocks instead we process try like we process normal values.
+it in a regular value. You can pattern match the try object against the 2 subtypes of try which are Success(value) and Failure(exception). They are in scala.util.{Failure, Success, Try}. Success
+contains a valid value and failure contains an exception. So we use try to avoid defensiveness with Try Catches blocks instead we process try like we process normal values.
 You can operate on Try like you would do on collections and use map, flatMap, filter.
    */
 
 
+
+  //Future type
+  /*
+Its a medium to evaluate something on another thread
+(asynchronous programming)
+   */
+
+val aFuture: Future[Int] = Future{
+  println("Loading...")
+  Thread.sleep(1000)
+  println("I have computed a value")
+  67
 }
+
+  Thread.sleep(2000)
+
+}
+
+  //future is a "collection" which contains a value when it's evaluated and not immediately, at the point when this code block is evaluated then Future will contain a value until then it does not contain any value.
+  //future is composable with map, flatmap and filter.
+
+  /*
+ - Let me tell you how to evaluate something on another thread in other words asynchronous programming. This is done by another "pseudo collection" known as Future.
+ - "import scala.concurrent.Future" this import is required to be able to use Future, else compiler will give error "cannot resolve symbol Future".
+ - In order to run a future, we will need to import an execution context ie "import scala.concurrent.ExecutionContext.Implicits.global" , When you import this value compiler will stop giving the
+   error 'No Implicits found for parameter executor: ExecutionContext' and is happy that this global value is available to run this future. The global value is equivalent of a thread pool ie a
+   collection of threads on which we can schedule the evaluation of this expression. So when we run this expression we will see o/p as - "Loading..." only as the 'main' thread of the JVM ie the
+   main thread of the application finished before this Future had the chance to evaluate ie a proof that this future block that I put here inside the constructor of the future was actually evaluated
+   on another thread.
+ - If you type "Thread.sleep(2000)" under the main jvm thread then this Future will also have the chance to evaluate and the o/p will come as
+ "Loading..."
+ "I have computed a value"
+
+ -  Future in line 120 is equivalent to below Future.apply
+    val aFuture = Future.apply({
+    println("Loading...")
+    Thread.sleep(1000)
+    println("I have computed a value")
+    67
+  })
+  This code block is passed to the constructor of Future and this expression will be evaluated on another thread.
+  In real life code bases we omit the paranthesis () over here as this block will be passed as an argument to Future s apply method.
+  Future.apply() -- Starts an asynchronous computation and returns a Future instance with the result of that computation. The result becomes available once the asynchronous computation is completed.
+
+- Monads- We spoke about "pseudo collection" in theoretical terms, Future, Try and Option types are called Monads in functional programming. Monads are a very touchy subject as they are very very
+  abstract and hard to explain. We ll talk about them later, for now think of  Future, Try and Option as some sort of collection.
+
+- difference b/w synchronous and asynchronous: https://blog.rockthejvm.com/sync,-async-and-(non)-blocking/#:~:text=In%20Scala%2C%20an%20asynchronous%20computation,be%20evaluated%20on%20another%20thread.&text=The%20value%20after%20the%20call,This%20is%20asynchronous.
+-controllable future, promise- https://blog.rockthejvm.com/controllable-futures/
+
+   */
+
+/*
+When you get Future object that means some background computation is ongoing. Future is used to implement multithreading in scala. Whatever computation that
+you want to get done on another thread other than current ongoing thread main you ll send it in future. The content inside future will be run on another thread
+and once you get the o/p of that, then you can do further map, flatmap on it but to do that first we ll have to wait for that thread to finish and give o/p to us.
+The background thread on which the computation runs comes from the thread pool inside Execution Context.
+If main method had some more instructions where it used the o/p of future then it would have waited for the background task aFuture to finish.
+ */
+
+
+
+  //Implicits basics 15:20 from video
+
+

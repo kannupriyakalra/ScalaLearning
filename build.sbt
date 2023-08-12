@@ -6,3 +6,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "ScalaLearning"
   )
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10"

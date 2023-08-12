@@ -10,15 +10,15 @@ object Basics extends App { //extends App means everything ie written in {} is e
   val aBoolean = false //type mentioning is optional mostly but sometimes there are exceptions.
   //even when type is not mentioned, its inferred
 
-  //Int, Boolean, Char, Double, Float, String are some standard types in scala
+  //Int, Boolean, Char, Double, Float, String are some standard types in scala.
 
   //strings and string operations
   val aString = "i love scala"
   val aComposedString = "i" + " " + "love" + " " + "scala"
   val anInterpolatedString = s"The meaning of life is $meaningOfLife" //inject another value inside a string
 
-  // in scala, we have to think in terms of values and functions and right hand side of a value is an expression, unlike other languages like javascript, cpp, java, python where we think in terms of instructions
-  // which are the things that computer does sequentially like do this do that increment this value. in scala we think in terms of values and composing these value to create new values.
+  // in scala, we have to think in terms of values and functions and right hand side of a value is an expression, unlike other languages like javascript, cpp, java, python where we think in terms
+  // of instructions which are the things that computer does sequentially like do this do that increment this value. in scala we think in terms of values and composing these value to create new values.
 
   //expressions = structures that can be reduced to a value, if statement, code blocks is also an expression as it can be reduced to a value
   val anExpression = 2 + 3
