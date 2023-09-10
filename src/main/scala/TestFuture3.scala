@@ -4,7 +4,8 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.postfixOps
-object TestFuture3 extends App{
+
+object TestFuture3 extends App {
 
   //Run one task, but block-shows how to create a future and then block to wait for its result.
 
@@ -21,7 +22,9 @@ object TestFuture3 extends App{
   println(result) //o/p-2
   sleep(1000)
 
-  def sleep(time: Long) { Thread.sleep(time) }
+  def sleep(time: Long) {
+    Thread.sleep(time)
+  }
 
 }
 
