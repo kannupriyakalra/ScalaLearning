@@ -1,10 +1,10 @@
 //uses of pattern matching
-//implemented prepend, map, filter, concat, zip, foldLeft, reverse
+//implemented prepend, map, filter, concat, zip, foldLeft, foldRight, reverse
 
 object TestList {
 
   //implement prepend method
-  def prepend[A](a: A, as: List[A]): List[A] = a :: as
+  def prepend[A](a: A, as: List[A]): List[A] = a :: as //as.::(a)
 
   //implement map method that can convert a list, locally defined so not conflicted with original scala map
   def map[A, B](l: List[A])(f: A => B): List[B] = l.map(f)
@@ -21,7 +21,7 @@ object TestList {
   def myFilter[A](l: List[A])(f: A => Boolean): List[A] = {
     l match {
       case ::(head: A, next: List[A]) => if (f(head)) head :: myFilter(next)(f) else myFilter(next)(f)
-      case Nil => Nil //empty list doesn't filter
+      case Nil => Nil //empty list doesn't filter, as there is no A we have nothing to implement f on.
     }
   }
 
@@ -81,9 +81,9 @@ object TestList {
     val l1: List[Int] = List(1, 2, 3)
     println(l1) //o/p- List(1, 2, 3)
 
-    for(x <- l1){ //display element in list l1 using for loop
+    for (x <- l1) { //display element in list l1 using for loop
       println(x)
-    }/*  o/p-
+    } /*  o/p-
     1
     2
     3   */
@@ -96,29 +96,41 @@ object TestList {
     //Uniform List can be created in Scala using List.fill() method which creates a list and fills it with zero or more copies of an element.
     // Repeats Scala three times.
     val programminglanguage = List.fill(3)("Scala")
-    println( "Programming Language : " + programminglanguage ) //o/p- Programming Language : List(Scala, Scala, Scala)
+    println("Programming Language : " + programminglanguage) //o/p- Programming Language : List(Scala, Scala, Scala)
     // Repeats no. 4, 8 times.
-    val number= List.fill(8)(4)
+    val number = List.fill(8)(4)
     println("number : " + number) //o/p-  number : List(4, 4, 4, 4, 4, 4, 4, 4)
 
     println(l1.map(x => x + 1)) //o/p- List(2, 3, 4)
     println(l1.map(x => List(x, x))) //o/p- List(List(1, 1), List(2, 2), List(3, 3)), List[List[Int]]
     println(l1.flatMap(x => List(x, x))) //o/p- List(1, 1, 2, 2, 3, 3)
     println(l1.filter(x => x >= 2)) //o/p- List(2,3)
-    println(l1.filter(_ >= 2)) //o/p- List(2,3), same as line 65, equivalent to println(l1.filter(x => x >= 2))
+    println(l1.filter(_ >= 2)) //o/p- List(2,3), same as line 107, equivalent to println(l1.filter(x => x >= 2))
 
     val l2: List[Int] = 1 :: 2 :: 3 :: Nil
     val l22: List[Int] = Nil.::(3).::(2).::(1)
     println(l2) //o/p- List(1, 2, 3)
     println(l22) // o/p- List(1, 2, 3) ,l22 is equivalent to l2, l1
 
-    val l3: List[Int] = Nil //Nil is List[Nothing] type, List[Nothing] <: List[Int] as Nothing <: Int because List is covariant, List has 2 implementations- one is case class :: ie recursive
-    // implementation that has head, tail n other is case object Nil, every list s last element is nil, to end the list, apply method adds it by default, nil is analogous to null of java,
+    val l3: List[Int] = Nil //Nil is List[Nothing] type, List[Nothing] <: List[Int] and ie why we could assign l3 as List[Int] because Nothing <: Int and List is covariant ie List[+A], List has 2
+    // implementations- one is case class :: ie recursive implementation that has head, tail n other is case object Nil.
+    // Every list's last element is nil. To end the list, apply method adds nil by default. Nil is analogous to null of java.
+    // List is linked list, it has head of type A, tail of type List[A], we need some default value of tail so we can end the list, otherwise list will be infinite, as for every list we have to give
+    // a head and tail and tail is a list, so for last element tail is Nil otherwise list won't stop ie it will be infinite. This is why list is made a trait and it has 2 implementations cons n nil
+    //as cons is a recursive implementation ie ended by nil.
     //command click on nil
+    // <: means subtype, Nothing is a subtype of all types.
+    //List is a effect type like future, option, try. List means multiple, future means time, option means nullability, try means exceptions, these are effects, list is a type constructor, we give
+    //List[A] A a type, list adds an effect to an underline type A.
+    //Covariant means if A is a subtype of B then f(A) is a subtype of f(B) where f is a type constructor, list is a type constructor not a type, A is a type, List[A] is a type
+    //:: cons is called recursive implementation as the constructor argument next is of type List[A] and cons is also of type List[A] and ie self referential type, type recursive.
+    //Nil implementation of List is made as Nil is base condition to end recursive implementation of ::, otherwise object won't be created of List.
     println(l3) // o/p- List(), Nil has internally tostring overriden so it gives empty list as output
 
     val l3e: List[Nothing] = List() //l3e is of type List[Nothing]
     println("empty list: " + l3e) //o/p- empty list: List()
+
+    val l3f: List[String] = Nil
 
     val l = prepend(4, l1)
     println("prepend called " + l) //o/p- prepend called List(4, 1, 2, 3) //a will get prepend in as list
@@ -149,24 +161,29 @@ object TestList {
 
     //q1-print sum of all elements of list l1
     println(l1.foldLeft(0)((acc, a) => acc + a)) //o/p -6 //acc- accumulated value ie final result, a- current element
+
     //q2-print the product of all elements
     println(l1.foldLeft(1)((acc, a) => acc * a)) //o/p -6
+
     //q3-find sum of all even elements of list -use filter first to find even elements then apply fold left.
-    println(l1.filter(x => x % 2 == 0).foldLeft(0)((acc, a) => acc + a)) //o/p-2, first filter will return a new list over that foldleft will be called.
-    //q4-implement foldLeft--line 45 myFoldLeft
-    val r = myFoldLeft(l1)(0)((acc, a) => acc + a)
-    println("myFoldLeft called-" + r) //o/p- myFoldLeft called- 6
-    //q5- find sum of all even elements of list by  only using foldLeft
+    println("sum of all even elements of list " + l1.filter(x => x % 2 == 0).foldLeft(0)((acc, a) => acc + a)) //o/p-2, first filter will return a new list over that foldleft will be called.
+
+    //q4- find sum of all even elements of list by  only using foldLeft
     println(l1.foldLeft(0)((acc, a) => if (a % 2 == 0) acc + a else acc)) //o/p-2, a is every element of list, acc is accumulated result, 0 is default value, if any element of list is even then add else
     // use same acc
+
+    //q5-implement foldLeft
+    val r = myFoldLeft(l1)(0)((acc, a) => acc + a)
+    println("myFoldLeft called-" + r) //o/p- myFoldLeft called- 6
+
+    println("foldRight " + l1.foldRight(0)((a, acc) => a + acc)) //o/p- foldRight 6
+
+    val s = myFoldRight(l1)(0)((a, acc) => a + acc)
+    println("myfoldRight called-" + s) //o/p- myfoldRight called- 6
 
     println(l1.reverse) //o/p-List(3, 2, 1)
     //q6- implement reverse
     println(myReverse(l1)) //o/p-List(3, 2, 1), as myReverse is not part of l1 and needs list as argument
-
-    println("foldRight "+l1.foldRight(0)((a, acc) => a + acc)) //o/p- foldRight 6
-    val s = myFoldRight(l1)(0)((a, acc) => a + acc)
-    println("myfoldRight called-" + s) //o/p- myfoldRight called- 6
 
 
   }
@@ -183,7 +200,7 @@ case object Nil extends List[Nothing]
 
 :: is called cons/prepend, it is a method which is given elem:B as an argument and returns a list, it adds the elem at the beginning of the list on which it is called.
  1 :: List(2, 3) = List(2, 3).::(1) = List(1, 2, 3)
-def :: [B >: A](elem: B): List[B] =  new ::(elem, this)
+def :: [B >: A](elem: B): List[B] =  new ::(elem, this) //'this' is the list on which '::' method is called.
 
     val l2: List[Int] = 1 :: 2 :: 3 :: Nil
     val l2: List[Int] = 1 :: (2 :: (3 :: Nil))
@@ -221,21 +238,25 @@ tail is of type List[A]
 //implement map method using recursive approach-
 def myMap[A, B](l: List[A])(f: A => B): List[B] = {  //list has 2 implementations ::(head, next) and nil ie why pattern match is showing the 2 cases.
   l match {
-    case (head: A) :: (tail: List[A]) => f(head) :: myMap(tail)(f)
+    case (head: A) :: (tail: List[A]) => f(head) :: myMap(tail)(f) // in pattern match case- :: is not a method here but a case class. pattern match cannot be done on method, only case class, as
+     pattern match is on a object an we see what it looks like on inside.
     case Nil => Nil //when list is empty, return empty list, Nil denotes empty list.
   }
 }
 f(head) converts type of head from A to B and myMap is a function whose i/p is a list of type A and a function A to B which returns List [B]
 when list is not empty f has to be called on every element of list which we did recursively using our myMap, after recursion is done head is prepended
-ultimately function f is called on every element of list but using recursive approach
+ultimately function f is called on every element of list but using recursive approach.
+
+here l is a list and ie a trait with 2 implementations ie why we are able to write match with it and do pattern matching.
+[A, B] are called type parameters.
 
 //def map[A, B](l: List[A])(f: A => B): List[B]
 
 dry run on List(1,2,3), f(x =>x+1)
 case ::(head, tail) => f(head) :: myMap(tail)(f)
-myMap(List(1,2,3))(f)   =   ::(1, List(2,3) ) => 2 :: myMap(List(2,3))(f)  = 2 :: List(3,4) = List(2,3,4)
-myMap(List(2,3))(f)     =   ::(2, List(3) ) => 3 :: myMap(List(3))(f)      = 3 :: List(4)   = List(3,4)
-myMap(List(3))(f)       =   ::(3, List() ) => 4 :: myMap(List())(f)        = 4 :: Nil       = List(4)
+myMap(List(1,2,3))(f)   =   case ::(1, List(2,3) ) => 2 :: myMap(List(2,3))(f)  = 2 :: List(3,4) = List(2,3,4)
+myMap(List(2,3))(f)     =  case ::(2, List(3) ) => 3 :: myMap(List(3))(f)      = 3 :: List(4)   = List(3,4)
+myMap(List(3))(f)       =  case ::(3, List() ) => 4 :: myMap(List())(f)        = 4 :: Nil       = List(4)
 myMap(List())(f)        =   Nil
 */
 
