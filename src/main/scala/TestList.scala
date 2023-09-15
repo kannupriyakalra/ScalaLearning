@@ -1,5 +1,7 @@
+import org.scalatest.Assertions.intercept
 //uses of pattern matching
 //implemented prepend, map, filter, concat, zip, foldLeft, foldRight, reverse
+// scala exercises done here- https://www.scala-exercises.org/std_lib/lists
 
 object TestList {
 
@@ -88,10 +90,24 @@ object TestList {
     2
     3   */
 
+    println("Lists can be accessed by position: " + l1(0)) //o/p- Lists can be accessed by position: 1, equivalent to l1.apply(0)
+
+// commented below code as it throws exception, intercept throws TestFailedException as the passed function runs normally and doesn't throw IndexOutOfBoundsException which was expected of it. Hover and read about intercept.
+//    intercept[IndexOutOfBoundsException] { //o/p-Lists can be accessed by position- IndexOutOfBoundsException: 2
+//      println("Lists can be accessed by position- IndexOutOfBoundsException: " + l1(1)) // Exception in thread "main" org.scalatest.exceptions.TestFailedException: Expected exception java.lang.IndexOutOfBoundsException to be thrown, but no exception was thrown
+//    }
+        intercept[IndexOutOfBoundsException] { //o/p-nothing as IndexOutOfBoundsException was thrown which was expected.
+          println("Lists can be accessed by position- IndexOutOfBoundsException: " + l1(3))
+        }
+    //def intercept[T <: AnyRef](f: => Any)(implicit classTag: ClassTag[T], pos: Position): T, here T is type of exception thrown, (f: => Any) is the block of code
+
     println(l1.head) //o/p- 1
+    println("headOption value: " + l1.headOption) //o/p- headOption value: Some(1)
     println(l1.tail) //o/p- List(2,3)
     println(l1.tail.head) //o/p-2
+
     println("List is empty or not: " + l1.isEmpty) //o/p- List is empty or not: false
+    println("Length of list is: " + l1.length) //o/p-Length of list is: 3
 
     //Uniform List can be created in Scala using List.fill() method which creates a list and fills it with zero or more copies of an element.
     // Repeats Scala three times.
@@ -103,14 +119,32 @@ object TestList {
 
     println(l1.map(x => x + 1)) //o/p- List(2, 3, 4)
     println(l1.map(x => List(x, x))) //o/p- List(List(1, 1), List(2, 2), List(3, 3)), List[List[Int]]
+
     println(l1.flatMap(x => List(x, x))) //o/p- List(1, 1, 2, 2, 3, 3)
+
     println(l1.filter(x => x >= 2)) //o/p- List(2,3)
-    println(l1.filter(_ >= 2)) //o/p- List(2,3), same as line 107, equivalent to println(l1.filter(x => x >= 2))
+    println(l1.filter(_ >= 2)) //o/p- List(2,3), same as line 123, equivalent to println(l1.filter(x => x >= 2))
+    println("filter value divisible by 2: "+ l1.filter(x => x % 2 == 0)) //o/p- filter value divisible by 2: List(2)
+
+    println("filterNot value: " + l1.filterNot(x => x == 2)) //o/p- filterNot value: List(1, 3) ,filterNot remove where value is 2, Selects all elements of this collection which do not satisfy (x => x == 2)
 
     val l2: List[Int] = 1 :: 2 :: 3 :: Nil
     val l22: List[Int] = Nil.::(3).::(2).::(1)
     println(l2) //o/p- List(1, 2, 3)
     println(l22) // o/p- List(1, 2, 3) ,l22 is equivalent to l2, l1
+
+    //Lists reuse their tails- a is pointing to 1, b is pointing to 2, c is pointing to 3, they all have common part of tail d
+    val d = Nil
+    val c = 3 :: d
+    val b = 2 :: c
+    val a = 1 :: b
+
+    println("Lists reuse their tails:" + a) //o/p- List(1, 2, 3)
+    println(a.tail)//o/p- List(2, 3)
+    println(b.tail)//o/p- List(3)
+    println(c.tail) //o/p- List()
+
+    //List() and Nil are same.
 
     val l3: List[Int] = Nil //Nil is List[Nothing] type, List[Nothing] <: List[Int] and ie why we could assign l3 as List[Int] because Nothing <: Int and List is covariant ie List[+A], List has 2
     // implementations- one is case class :: ie recursive implementation that has head, tail n other is case object Nil.
@@ -152,7 +186,9 @@ object TestList {
     println("myConcat called-  " + p) //o/p- myConcat called-  List(100, 200, 300, 400, 500, 600, 700)
 
     val p2 = l4 ::: l5 // ::: is used for concatenating 2 lists
-    println("::: called-  " + p2) //o/p- ::: called-  List(100, 200, 300, 400, 500, 600, 700)
+    println("::: called-  " + p2) //o/p- ::: called-  List(100, 200, 300, 400, 500, 600, 700), this is equivalent to println("::: called-  " + p2.toString()), p2.toString is automatically called
+    // by compiler as every object has a toSting method, + is for concatenation
+    println("Nil is an empty List:-  " + (l4 ::: Nil)) //o/p- Nil is an empty List:-  List(100, 200, 300)
 
     println("zip internal method called " + l1.zip(l2)) //o/p- zip internal method called List((1,1), (2,2), (3,3))
 
@@ -177,6 +213,7 @@ object TestList {
     println("myFoldLeft called-" + r) //o/p- myFoldLeft called- 6
 
     println("foldRight " + l1.foldRight(0)((a, acc) => a + acc)) //o/p- foldRight 6
+    println("foldRight - using _ as shorthand  " + l1.foldRight(0)(_ + _)) //o/p- foldRight - using _ as shorthand  6
 
     val s = myFoldRight(l1)(0)((a, acc) => a + acc)
     println("myfoldRight called-" + s) //o/p- myfoldRight called- 6
@@ -185,6 +222,10 @@ object TestList {
     //q6- implement reverse
     println(myReverse(l1)) //o/p-List(3, 2, 1), as myReverse is not part of l1 and needs list as argument
 
+    println("reduceLeft: " + l1.reduceLeft(_ + _)) //o/p- reduceLeft: 6
+    println("reduceLeft * operator: " + l1.reduceLeft(_ * _)) //o/p- reduceLeft * operator: 6
+
+    println("You can create a list from a range: " + (1 to 5).toList) //o/p- You can create a list from a range: List(1, 2, 3, 4, 5)
 
   }
 }
