@@ -1,3 +1,4 @@
+//https://www.hackerrank.com/challenges/fp-solve-me-first/problem?isFullScreen=true
 package Hackerrank
 
 object SolveMeFirst {
