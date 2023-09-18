@@ -1,0 +1,5 @@
+package Hackerrank
+
+object FilterArray {
+
+}

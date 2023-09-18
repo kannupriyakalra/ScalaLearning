@@ -91,6 +91,7 @@ object TestList {
     3   */
 
     println("Lists can be accessed by position: " + l1(0)) //o/p- Lists can be accessed by position: 1, equivalent to l1.apply(0)
+    println("To find index of a element in a list: " + l1.indexOf(1)) //o/p- To find index of a element in a list: 0
 
 // commented below code as it throws exception, intercept throws TestFailedException as the passed function runs normally and doesn't throw IndexOutOfBoundsException which was expected of it. Hover and read about intercept.
 //    intercept[IndexOutOfBoundsException] { //o/p-Lists can be accessed by position- IndexOutOfBoundsException: 2
