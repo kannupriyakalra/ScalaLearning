@@ -45,6 +45,7 @@ object TestList {
     }
   }
 
+  //veryimportant
   // 1,2,3,4,5 are elements of list and zero is default then order of execution is ((((((0) + 1) + 2) + 3) + 4) + 5) + ...
   def myFoldLeft[A, B](ls: List[A])(z: B)(op: (B, A) => B): B = {
     ls match {
