@@ -34,13 +34,25 @@ object FilterPositionsInAList {
     .reverse
 
   /*
-  on List(2, 5, 3, 4, 6, 7, 9, 8) foldLeft is applied from left to right with z is of type tuple (0, Nil: List[Int]),
-  case ((0, Nil), 2) =>
-  (idx, result) this is acc, consider ((idx, result), a) => (idx + 1, if (idx % 2 == 0) result else a :: result) as (acc,a) => acc where acc is accumulated result and a is each element on list
-  case is another way of writing this, case is for pattern matching, we did pattern match in  input arguments itself, this is a new syntax where function is
+ - on List(2, 5, 3, 4, 6, 7, 9, 8) foldLeft is applied from left to right with z is of type tuple (0, Nil: List[Int]),
+ - consider "((idx, result), a) => (idx + 1, if (idx % 2 == 0) result else a :: result)" as function ie (acc,a) => acc where acc is accumulated result ie (idx, result) and a is each element on list.
+ - case is another way of writing this, case is for pattern matching, we did pattern match in  input arguments itself, this is a new syntax.
+ - override def foldLeft[B](z: B)(op: (B, A) => B): B
+  op will run on every A, A is element of list, folding the list from left to right while updating the state.
+ -   _2 is done on result of foldLeft and on that result reverse is done.
 
-  override def foldLeft[B](z: B)(op: (B, A) => B): B
-  op will run on every A, A is element of list, folding the list from left to right while updating the state
+  - Dry run-
+  List(2, 5, 3, 4, 6, 7, 9, 8)
+  case ((0, Nil), 2) => (1, Nil ) = (1, Nil)
+  case ((1, Nil), 5) => (2, 5 :: Nil ) = (2, List(5) )
+  case ((2, List(5) ), 3) => (3, List(5) )
+  case ((3, List(5) ), 4) => (4, 4 :: List(5) ) = (4, List(4, 5) )
+  case ((4, List(4, 5) ), 6) => (5, List(4, 5) )
+  case ((5, List(4, 5) ), 7) => (6, 7 :: List(4, 5) ) = (6, List(7, 4, 5) )
+  case ((6, List(7, 4, 5) ), 9) => (7, List(7, 4, 5) )
+  case ((7, List(7, 4, 5) ), 8) => (8, 8 :: List(7, 4, 5) ) = (8, List(8, 7, 4, 5) )
+
+  (8, List(8, 7, 4, 5) )._2.reverse = List(5, 4, 7, 8)
    */
 
   def f5(ls: List[Int]): List[Int] = ls
@@ -54,7 +66,7 @@ object FilterPositionsInAList {
     //f0(List(0, 1, 2, 3, 4, 5, 6, 7)).foreach(println)
     f(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
     // f3(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
-    //f4(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
+   // f4(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
 
   }
 }
