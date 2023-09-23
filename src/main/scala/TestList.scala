@@ -75,6 +75,7 @@ object TestList {
   }
   //another solution to implement foldRight is reverse list, then apply foldLeft
 
+  //veryimportant
   def myReverse[A](ls: List[A]): List[A] = {
     ls.foldLeft(Nil: List[A])((acc, a) => a :: acc)
   }
