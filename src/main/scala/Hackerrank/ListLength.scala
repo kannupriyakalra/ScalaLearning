@@ -11,14 +11,13 @@ object ListLength {
 
   //use below 2 solutions to understand how to convert a recursive solution to tail recursive- this is the only way
   //tail recursive solution- better than recursive
-  def myLength(arr: List[Int], count: Int): Int = {
+  def listLength(arr: List[Int], count: Int): Int = {
     arr match {
-      case _ :: next => myLength(next, count + 1) //head unused so replaced by _ , for this head we increased count by 1
-      case Nil => count
+      case _ :: next =>
     }
   }
   def f1(arr: List[Int]): Int = {
-    myLength(arr, 0)
+    listLength(arr, 0)
   }
 
   //recursive solution
