@@ -13,7 +13,8 @@ object ListLength {
   //tail recursive solution- better than recursive
   def listLength(arr: List[Int], count: Int): Int = {
     arr match {
-      case _ :: next =>
+      case _ :: next => listLength(next, count + 1) //head unused so replaced by _ , for this head we increased count by 1
+      case Nil => count
     }
   }
   def f1(arr: List[Int]): Int = {
