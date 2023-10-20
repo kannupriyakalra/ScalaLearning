@@ -2,34 +2,30 @@ package Hackerrank
 
 //https://www.hackerrank.com/challenges/eval-ex/problem?isFullScreen=true
 
-
 object EvaluatingEPowerX {
 
-  // 1 + x + x^2/2! + x^3/3! + x^4/4! + ... + x^9/9!
-  // 1 + x/1 + x*x/1*2 + x*x*x/1*2*3 + x*x*x*x/1*2*3*4 + ... + x^9/9!
-  //given previous element, next element is previous element * x/1
+  // e^x = 1 + x + x^2/2! + x^3/3! + x^4/4! + ... + x^9/9!
 
   def factorial(n: Int): Int = {
     if (n == 0) 1
-    else n * factorial(n - 1) //5! is 5*4!
+    else n * factorial(n - 1)
   }
-
   def ePowerX(x: Double): Double = { //time complexity- O(1) as (1 to 9 ) is constant, no. of iterations are constant for all values of x.
-    (1 to 9).foldLeft(1.0)((acc, n) => (acc + Math.pow(x, n) / factorial(n)))
+    (1 to 9).foldLeft(1.0)((acc, n) => (acc + Math.pow(x, n) / factorial(n)))  // here n is 1 to 9
   }
 
-  // here n is 1 to 9
-  //we can use foldLeft on scenarios other than list, instead of using a for loop on collection of numbers like 0 to 9 for resolving above expression. (0 to 9).foldLeft()
+  //this is an example of using foldLeft on scenarios other than list.
+  // Instead of using a for loop on collection of numbers like 0 to 9 for resolving above expression, we can use "(0 to 9).foldLeft()"
   //we took range as (1 to 9) and not (0 to 9) as in foldLeft default value is given as 0th term 1.0.
 
   //Alternate Solution- 2
+  // 1 + x + x^2/2! + x^3/3! + x^4/4! + ... + x^9/9!
+  // 1 + x/1 + x*x/1*2 + x*x*x/1*2*3 + x*x*x*x/1*2*3*4 + ... + x^9/9!
+  //given previous element, next element is previous element * x/n ie next term = previous term * x/n
   //  x*x/1*2 * x/3 = x*x*x/1*2*3, create new term using previous term.
-  //  next term = previous term * x/n
 
   //x/n is a small no. and in 1st solution x^9/x/n! is huge a huge no. So this solution is more optimised, we don't have to find factorial repeatedly.
 
-  //here acc is result (previous term * x/n) +
-  //(b,a)=>b,
   def ePowerX2(x: Double): Double = {
     (1 to 9).foldLeft(1.0, 1.0)((tuple, n) => (tuple._1 + tuple._2 * x / n, tuple._2 * x / n))
   }._1
@@ -58,12 +54,13 @@ object EvaluatingEPowerX {
 }
 
 /*
-Note: Tuples cannot be directly destructured in method or function parameters.
+Note:
+ 1.Tuples cannot be directly destructured in method or function parameters.
       Either create a single parameter accepting the Tuple2{Alternate Solution- 2 above},
       or consider a pattern matching anonymous function: `{ case (result, previous_term) => ... }
-      (1 to 9).foldLeft(1, 1)(((result, previous_term), n)
-
       writing a tuple as (result, previous_term) means destructuring it which cannot be done unless a case statement is used.
+
+  2. Pattern matching is used to dissect/deconstruct an existing object.
  */
 
 

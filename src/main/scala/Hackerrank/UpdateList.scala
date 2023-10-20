@@ -1,5 +1,6 @@
 package Hackerrank
 
+import scala.annotation.tailrec
 import scala.math.abs
 
 
@@ -18,11 +19,12 @@ object UpdateList {
 
   def f3(ls: List[Int]): List[Int] = { //O(n) as list is traversed only once, recursion is also like a loop, recursive call is made n times until n elements of list get nil.
     ls match {
-      case ::(head, next) => head.abs :: f2(next)
+      case ::(head, next) => head.abs :: f3(next)
       case Nil => Nil
     }
   }
 
+  @tailrec
   def absList(inputList: List[Int], resultList: List[Int]): List[Int] = { //O(n) as input list is traversed once
     inputList match {
       case head :: tail => absList(tail, head.abs :: resultList)
@@ -57,7 +59,7 @@ object UpdateList {
     //println(f1(List(2, -4, 3, -1, 23, -4, -54)))
     //println(f2(List(2, -4, 3, -1, 23, -4, -54)))
     //println(f4(List(2, -4, 3, -1, 23, -4, -54)))
-   // println(f5(List(2, -4, 3, -1, 23, -4, -54)))
+    // println(f5(List(2, -4, 3, -1, 23, -4, -54)))
     println(f6(List(2, -4, 3, -1, 23, -4, -54)))
 
   }

@@ -23,7 +23,7 @@ object FilterPositionsInAList {
 
   //alternate way 3-
 
-  def f3(ls: List[Int]): List[Int] = ls.zipWithIndex.filter { case (value, index) => index % 2 != 0 }.map(_._1)
+  def f3(ls: List[Int]): List[Int] = ls.zipWithIndex.filter { case (value, index) => index % 2 != 0 }.map(_._1)  //Time complexity is O(n)= ls.zipWithIndex is O(n), then for filter is O(n), then for map is  O(n) = O(n) + O(n) + O(n) = 3 O(n) = O(n)
   //map(_._1) is map(x:(Int,Int) =>x._1)
 
   //alternate way 4-
