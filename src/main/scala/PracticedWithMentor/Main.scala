@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object Main {
   def main(args: Array[String]): Unit = {
     println("Hello world!") //println is a method and not keyword, its mentioned wrong in gfg identifier article that its a keyword

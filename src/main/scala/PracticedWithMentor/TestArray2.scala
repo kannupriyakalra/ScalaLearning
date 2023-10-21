@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestArray2 extends App {
 
   //Q1. Implement foldLeft on an array

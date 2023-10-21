@@ -1,4 +1,6 @@
-import Array._
+package PracticedWithMentor
+
+import scala.Array._
 
 object TestArray extends App {
 

@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestAnonymous {
 
   trait Mergable[A] {
