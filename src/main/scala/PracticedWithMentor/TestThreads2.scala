@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 /* undertanding setName, getName, setPriority, getPriority thread methods
  from   //read https://blog.knoldus.com/things-to-know-about-multithreading-in-scala/ in this link thread is created wrongly so o/p are wrong ie the
  right way - var thread1= new SetPriorityGetPriority() , i corrected n executed below program.

@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 import org.scalatest.Assertions.intercept
 //uses of pattern matching
 //implemented prepend, map, filter, concat, zip, foldLeft, foldRight, reverse

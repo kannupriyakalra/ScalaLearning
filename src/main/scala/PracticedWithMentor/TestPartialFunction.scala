@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 //Partial function
 object TestPartialFunction extends App {
 

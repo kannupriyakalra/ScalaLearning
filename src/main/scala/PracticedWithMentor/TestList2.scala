@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestList2 extends App {
 
   //Q1- delete nth element of a list, n-index

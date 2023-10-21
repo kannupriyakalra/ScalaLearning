@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 import scala.annotation.tailrec
 
 //google- how to create threads in scala/implementation of threads in scala/scala multithreading
