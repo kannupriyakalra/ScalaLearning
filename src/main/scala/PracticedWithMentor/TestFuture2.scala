@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 //retry logic for calling a endpoint again
 
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -1,8 +1,10 @@
+package PracticedWithMentor
+
 //https://alvinalexander.com/scala/concurrency-with-scala-futures-tutorials-examples/ code examples understood-
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 
 object TestFuture3 extends App {

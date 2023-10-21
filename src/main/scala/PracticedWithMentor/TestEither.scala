@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestEither {
 
   //implementation of our either using this trait n the 2 case classes

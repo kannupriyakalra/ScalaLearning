@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 import scala.collection.LinearSeq
 
 object TestHigherKindedTypes {
