@@ -1,5 +1,6 @@
+package PracticedWithMentor
+
 import scala.annotation.tailrec
-import scala.collection.immutable.::
 
 object TestSort {
 

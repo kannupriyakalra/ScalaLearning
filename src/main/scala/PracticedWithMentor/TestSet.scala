@@ -1,4 +1,4 @@
-import TestBinarySearchTree._
+package PracticedWithMentor
 
 object TestSet extends App {
 

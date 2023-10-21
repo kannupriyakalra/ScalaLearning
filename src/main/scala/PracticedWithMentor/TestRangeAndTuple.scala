@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestRangeAndTuple extends App{
 
 

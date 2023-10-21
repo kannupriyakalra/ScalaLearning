@@ -1,5 +1,7 @@
+package PracticedWithMentor
+
 import scala.io.StdIn
-import scala.util.{Try, Success, Failure}
+import scala.util.{Failure, Success, Try}
 
 object TestTry extends App{
 
