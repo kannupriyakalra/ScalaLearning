@@ -1,4 +1,6 @@
-import TestBinarySearchTree.Tree.minimum
+package PracticedWithMentor
+
+import PracticedWithMentor.TestBinarySearchTree.Tree.minimum
 
 object TestBinarySearchTree extends App {
 
