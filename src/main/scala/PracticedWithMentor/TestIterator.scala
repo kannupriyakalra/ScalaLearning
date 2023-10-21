@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 import java.util.UUID
 import scala.None
 //implementation of Iterator- ListIterator(to provide the ability to iterate over a list), OptionIterator(to provide the ability to iterate over a option)
@@ -72,22 +74,22 @@ object TestIterator extends App {
 
   val itr: MyIterator[Int] = MyIterator.fromList(l1)
 
-    println(itr.next) //o/p- 1
-    println(itr.next) //o/p- 2
-    println(itr.next) //o/p- 3
-    //println(itr.next) gives exception as no element ie why use if(itr.hasNext) before calling next
+  println(itr.next) //o/p- 1
+  println(itr.next) //o/p- 2
+  println(itr.next) //o/p- 3
+  //println(itr.next) gives exception as no element ie why use if(itr.hasNext) before calling next
 
-    if (itr.hasNext) println(itr.next) else println("no more elements in the list") //o/p- no more elements in the list
+  if (itr.hasNext) println(itr.next) else println("no more elements in the list") //o/p- no more elements in the list
 
 
-    val o1 = Some(1)
+  val o1 = Some(1)
 
-    val itro = MyIterator.fromOption(o1)
+  val itro = MyIterator.fromOption(o1)
 
-    println(itro.next) //o/p- 1
-    // println(itro.next) // o/p- NoSuchElementException: None.get
+  println(itro.next) //o/p- 1
+  // println(itro.next) // o/p- NoSuchElementException: None.get
 
-    if (itro.hasNext) println(itro.next) else println("no more elements in the option") //o/p- no more elements in the option
+  if (itro.hasNext) println(itro.next) else println("no more elements in the option") //o/p- no more elements in the option
 
   val itr2: MyIterator[Int] = MyIterator.fromList(l1) //created again as itr got exhausted by calling in line 55-57
 
@@ -110,4 +112,5 @@ object TestIterator extends App {
 
 //Iterator is a way of iterating through collection. It is mutable ie why usually not used.
 //ListIterator is mutable ie why (var ls: List[A])  var used.
+
 
