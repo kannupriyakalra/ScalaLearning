@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestOrdering extends App{
 
   //implement ordering trait for int type
@@ -28,7 +30,6 @@ object TestOrdering extends App{
 
 
   //implemented Person Ordering on Tree[Person]
-  import TestBinarySearchTree._
 
   val t: Tree[Person] = Empty.insert(person1).insert(person2)
   println(t)//o/p-//Node(Person(bob,30),Empty,Node(Person(ann,32),Empty,Empty))

@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestCurrying {
 
   def add(a1: Int, a2: Int): Int = a1 + a2

@@ -1,3 +1,5 @@
+package PracticedWithMentor
+
 object TestTree extends App {
 
   sealed trait Tree[+A] {
