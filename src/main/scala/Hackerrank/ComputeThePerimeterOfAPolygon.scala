@@ -51,7 +51,7 @@ object ComputeThePerimeterOfAPolygon {
       })
      */
 
-    val edges: List[Seq[(Int, Int)]] = points.sliding(2).toList // edges: List[Seq[(Int, Int)]] every Seq here has 2 elements ie List( Seq( (x1, y1), (x2, y2) ), Seq( (x1, y1), (x2, y2) ) ,... , Seq( (x1, y1), (x2, y2) ) )
+    val edges: List[Seq[(Int, Int)]] = points.sliding(2).toList // edges: List[Seq[(Int, Int)]] every Seq here has 2 elements ie List( Seq( (x1, y1), (x2, y2) ), Seq( (x2, y2), (x3, y3) ) ,... , Seq( (xn-1, yn-1), (xn, yn) ) )
     val perimeterOfAPolygon = edges.map {
       case Seq(p1, p2) => distanceBetween2Points(p1, p2) //case Seq( (x1, y1), (x2, y2) )
     }.sum + distanceBetween2Points(points.head, points.last) //points.head gives 1st point and points.last gives last point, we used edges list to find the
