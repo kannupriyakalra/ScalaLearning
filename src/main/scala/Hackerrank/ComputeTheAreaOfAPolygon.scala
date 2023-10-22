@@ -15,7 +15,7 @@ to calculate the area of a polygon when its coordinates are given we ll use shoe
 .
 (xn,yn), (x0,y0)=> xny0 − x0yn //firstPoint and last point
 
-twoPointPairs is a list of sequence of pairs ie List[Seq[(Int, Int)]] from 1st point until last point. For first and last point part of shoelace formula will have to be calculated separately.
+twoPointPairs is a list of sequence of pairs ie List[Seq[(Int, Int)]] from 1st point until last point. For first and last point part of shoelace formula ie xny0 − x0yn sum will have to be calculated separately.
  */
 
 object ComputeTheAreaOfAPolygon {
