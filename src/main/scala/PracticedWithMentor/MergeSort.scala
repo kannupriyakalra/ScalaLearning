@@ -17,18 +17,6 @@ object MergeSort {
     }
   }
 
-  //convert merge method to its tail recursive
-  //its complexity is O(n) as n operations are done recursively
-  @tailrec
-  def mergeTail(l1: List[Int], l2: List[Int], result: List[Int] = Nil): List[Int] = {
-    (l1, l2) match {
-      case (head1 :: tail1, head2 :: tail2) => if (head1 < head2) mergeTail(tail1, l2, head1 :: result) else mergeTail(l1, tail2, head2 :: result)
-      case (_ :: _, Nil) => result.reverse ++ l1
-      case (Nil, _ :: _) => result.reverse ++ l2
-      case (Nil, Nil) => result.reverse
-    }
-  }
-
   //implement merge sort recursively-- using merge2 function
   //what is time complexity of merge sort? nlogn why is it nlogn?
   // n -> n/2 -> n/4 -> ... 1 , these are logn base2 values (how many times these are done ie n ko n/2 kitne bar kare ki 1 aaye), log 8base2 =3 because 2^3 = 8 so 3 layers 8 is dived into 4 and 4, 4 into
@@ -49,7 +37,6 @@ object MergeSort {
   }
 
   def main(args: Array[String]): Unit = {
-
     val l = List(10, 8, 5, 6, 1, 2, 7, 9, 4, 3)
     println(mergeSort(l)) //o/p- List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
   }

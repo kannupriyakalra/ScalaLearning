@@ -86,3 +86,6 @@ tail recursive functions better than non tail recursive functions because tail-r
 In TestSort.scala mergeTail everytime result is called recursively is the result = nil default value not updated ? Default value is used when no value is given when a value is there that is used
  */
 
+//Note- Not all recursive functions can be converted into tail recursive. Tail recursive solution is more optimised than normal recursive as it uses the same recursion stack repeatedly instead of
+// creating a new one.
+

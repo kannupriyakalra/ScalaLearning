@@ -9,7 +9,7 @@ object Merge2SortedList {
   // merge method time complexity - O(n) + O(nlogn) = O(nlogn) (as O(nlogn) is bigger than O(n), + in time complexity means max)
   def merge(l1: List[Int], l2: List[Int]): List[Int] = {
     //    val l = l1.concat(l2) // time complexity- O(n)
-    //    val result = l.sorted // time complexity- O(nlogn) , mentor will tell later which sorting technique is internally used n why is complexity nlogn
+    //    val result = l.sorted // time complexity- O(nlogn) , mentor will tell later which sorting technique is internally used n why its complexity is O(nlogn)
     //    result
     l1.concat(l2).sorted
   }
@@ -37,8 +37,8 @@ minimum element value in both list is their respective head and as lists are sor
 called recursively
    */
 
-  //q3- convert merge method to its tail recursive
-  //its complexity is O(n) as n operations are done recursively
+  //q3- convert merge method to its tail recursive #important
+  //its complexity is O(n) as n operations are done recursively, this is more optimised than merge2.
   @tailrec
   def mergeTail(l1: List[Int], l2: List[Int], result: List[Int] = Nil): List[Int] = {
     (l1, l2) match {
@@ -52,13 +52,13 @@ called recursively
   /*
 mergeTail-
 do like u did factorial
-- recursively ek result list sath le k chal in merge and prepend o/p in that and reverse that list in the end.
+- take a result list along recursively in merge method and prepend o/p in that and reverse that list in the end.
 head1 :: result--adding head1 to result list
-case (head1 :: tail1, Nil)-- result jo abhi tak gather hua hai vo reverse tarikay se hua hai so uss result me l1 add krna hai.  reverse ++ l1
-case (Nil, Nil)-- means came to end of both list, so return the result by reversing it
- //why merge2 didnt require reversing result of result list, head 1 is first element its decided then that is prepended to o/p of recursive calling of merge2 which will be sorted.
-++ alias for concat
-result: List[Int] = Nil----default initialised to Nil so not required to be sent while calling merge3
+case (head1 :: tail1, Nil) => reverse ++ l1 // elements gathered in result list so far are added in a reverse way, so we need to reverse them and then we can concat l1 to it.
+case (Nil, Nil) => result.reverse -- means we came to end of both list, so we ll return the result list by reversing it.
+ //why merge2 didnt require reversing result of result list, head1 is first element, its decided and then that is prepended to o/p of recursive calling of merge2 which will be sorted.
+++ is alias for concat
+result: List[Int] = Nil----it is default-initialized to Nil, so it is not required to be sent as a parameter when calling merge3.
 
 dry run
   val l1 = List(4, 5, 7, 8, 9, 10), val l2 = List(2, 3, 6)
