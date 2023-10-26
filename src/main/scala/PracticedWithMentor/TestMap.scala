@@ -1,5 +1,6 @@
-package PracticedWithMentor //for importing Tree[K, V] in line 13 case class
+package PracticedWithMentor
 
+import TestBinarySearchTree._ //for importing Tree[K, V] in line 13 case class
 object TestMap extends App {
 
   //implementation of a Map

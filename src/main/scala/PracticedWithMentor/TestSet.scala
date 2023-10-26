@@ -1,5 +1,7 @@
 package PracticedWithMentor
 
+import PracticedWithMentor.TestBinarySearchTree._
+
 object TestSet extends App {
 
   //implementation of a Set

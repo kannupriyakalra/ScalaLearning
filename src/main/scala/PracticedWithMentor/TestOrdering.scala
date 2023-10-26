@@ -1,6 +1,6 @@
 package PracticedWithMentor
 
-object TestOrdering extends App{
+object TestOrdering extends App {
 
   //implement ordering trait for int type
   object IntOrdering extends Ordering[Int] {
@@ -26,13 +26,14 @@ object TestOrdering extends App{
     def compare(a: Person, b: Person): Int = a.age.compare(b.age)
   }
 
-  println(PersonOrdering.compare(person1, person2))// o/p- -1 negative ie person1 is less in age to person2
+  println(PersonOrdering.compare(person1, person2)) // o/p- -1 negative ie person1 is less in age to person2
 
 
   //implemented Person Ordering on Tree[Person]
+  import TestBinarySearchTree._
 
   val t: Tree[Person] = Empty.insert(person1).insert(person2)
-  println(t)//o/p-//Node(Person(bob,30),Empty,Node(Person(ann,32),Empty,Empty))
+  println(t) //o/p-//Node(Person(bob,30),Empty,Node(Person(ann,32),Empty,Empty))
 
   //to insert values inside tree use PersonOrdering as tree s insert method is generic and requires an ordering to compare person based on age as ann is 32 and ie > 30 so it went to right node.
 }
