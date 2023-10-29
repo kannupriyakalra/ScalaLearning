@@ -312,8 +312,9 @@ myFilter-
 Filter is a method that takes i/p as a list and run function f on each element of list, if function condition holds true then add that element to o/p list using ::. if list is non empty, then we have head n
 tail of list, we check on head if it follows function condition, if yes, then to add it to the list, we use append and call the remaining list recursively to again check the same for next head, for
 the head for which function condition is false, it skips adding to the o/p list and call the remaining list recursively.
-if if(f(head)) evaluates to true then prepend head to remaining filtered list ie include current head in final answer otherwise don't include head in else and continue filtering with remaining list.
-override def filter(p: A => Boolean): List[A], filter keeps only those elements for which function is true
+if(f(head)) evaluates to true then prepend head to remaining filtered list ie include current head in final answer otherwise don't include head in else and continue filtering with remaining list.
+override def filter(p: A => Boolean): List[A], filter keeps only those elements for which function is true.
+ (x => x == 2) is (f: A => Boolean), here x mean type A and x == 2 mean type boolean? yes
 */
 
 
