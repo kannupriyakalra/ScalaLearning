@@ -10,14 +10,18 @@ object HelloWorldNTimes extends App {
     }
   }
 
-  def ff(n: Int): Unit = {
+  //Alternate Solution- 2
+  def f2(n: Int): Unit = {
     for (i <- 1 to n) println("Hello World")
   }
 
-  def ff2(n: Int): Unit = {
-    (1 to n).foreach(i => println("Hello World")) //desugar of above for loop solution
+  //Alternate Solution- 3 : desugar of above for loop solution
+  def f3(n: Int): Unit = {
+    (1 to n).foreach(i => println("Hello World"))
   }
-  def fff(n: Int): Unit = {
+
+  //Alternate Solution- 4
+  def f4(n: Int): Unit = {
     var i = n
     while (i > 0) {
       println("Hello World")
@@ -27,7 +31,8 @@ object HelloWorldNTimes extends App {
 
   var n = scala.io.StdIn.readInt
   f(n)
-  ff(n)
-  fff(n)
+  f2(n)
+  f3(n)
+  f4(n)
 
 }
