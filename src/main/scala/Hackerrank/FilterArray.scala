@@ -1,6 +1,6 @@
 package Hackerrank
 
-// how to write your own implementation of a filter function - revise TestList.scala line 183 myFilter implementation
+//to write your own implementation of a filter function - revise TestList.scala line 183 myFilter implementation
 
 //https://www.hackerrank.com/challenges/fp-filter-array/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
 object FilterArray {
