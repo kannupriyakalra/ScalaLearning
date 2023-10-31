@@ -20,7 +20,7 @@ object FunctionsOrNot {
 
     val pairsMap: Map[Int, Int] = pairs.toMap
 
-    //pairs.forall(x => pairsMap(x._1) == x._2) // alternate way of doing , for every pair in Seq x: (Int, Int) it finds value corresponding to keyInSeq and matches it with valueInSeq and re
+    //pairs.forall(x => pairsMap(x._1) == x._2) // alternate way of doing , for every pair in Seq x: (Int, Int) it finds value corresponding to keyInSeq and matches it with valueInSeq and return a boolean
     pairs.forall { case (keyInSeq, valueInSeq) => pairsMap(keyInSeq) == valueInSeq }
 
   }
