@@ -12,7 +12,7 @@ object TestTailRecursion {
 
   //tail recursive example of factorial-
   def factorialTail(n: Int): Int = {
-    @tailrec //tell compiler explicitely that this method is tail recursive, this ensures its executed tail recursively. if annotation is not there check by debugging by putting break point by how stacks are made n if its done tail recursively in myFoldLeft in testList.scala
+    @tailrec //tell compiler explicitly that this method is tail recursive, this ensures its executed tail recursively. if annotation is not there check by debugging by putting break point by how stacks are made n if its done tail recursively in myFoldLeft in testList.scala
     def iter(x: Int, result: Int): Int = //creating a method locally in a method is allowed in scala and calling it in that scope
       if (x == 0) result
       else iter(x - 1, result * x)
@@ -27,10 +27,6 @@ object TestTailRecursion {
   }
   // result: Int = 1 default value giving is allowed in scala
 
-  //greatest common divisor tail recursive implementation
-  def gcd(a: Int, b: Int): Int =
-    if (b == 0) a else gcd(b, a % b)
-
   def main(args: Array[String]): Unit = {
     println(factorial(5)) //o/p- 120
     println(factorial(20)) //o/p- -2102132736, negative as integer range got over flown from positive side so it got to negative side, thats how it move in circle, this is integer overflow
@@ -43,13 +39,6 @@ object TestTailRecursion {
 
     println("factorialTail2 : " +factorialTail2(5)) //o/p- factorialTail2 : 120, as default result value is already present ie why not sent
 
-    println(gcd(128, 96)) //o/p- 32
-    /*
-    gcd(128,96)
-    gcd(96, 128 % 96) = gcd(96, 32)
-    gcd(36, 96 % 32) = gcd(32,0)
-    b==0, 32 answer
-     */
   }
 
 }
@@ -89,4 +78,5 @@ In TestSort.scala mergeTail everytime result is called recursively is the result
 
 //Note- Not all recursive functions can be converted into tail recursive. Tail recursive solution is more optimised than normal recursive as it uses the same recursion stack repeatedly instead of
 // creating a new one.
+
 
