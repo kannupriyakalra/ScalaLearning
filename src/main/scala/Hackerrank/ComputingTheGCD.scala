@@ -1,6 +1,12 @@
 //https://www.hackerrank.com/challenges/functional-programming-warmups-in-recursion---gcd/problem?isFullScreen=true
 
 /*
+Note-
+1. GCD using the Euclidean algorithm can be calculated by subtraction also but that is less optimised than using %, ignore the video, Euclidean algorithm link and Euclidean algorithm formula
+   mentioned in hackerrank question.
+2. Read to understand how to find gcd using long division method, in this ignore the Euclidean algorithm part its not put well. - https://byjus.com/maths/greatest-common-divisor/#:~:text=The%20greatest%20common%20divisor%20(GCD,can%20be%20divided%20by%205.
+3. The algorithm we created which uses % by making a pattern out of long division method is Euclidean algorithm only.
+
 GCD-Greatest Common Divisor value of x and y using the Euclidean algorithm = GCD(x,y) = GCD (y,x) --order of x,y doesn't matter. Also it doesn't matter if x > y or y > x.
 x/y ~ dividend/divisor , example - 12/15 -when done using long division method (when remainder becomes 0, last divisor is gcd)
 
@@ -38,7 +44,7 @@ object ComputingTheGCD {
 }
 
 /*
-
+-----------------------------------------------
 test cases-
 println(gcd(128, 96)) //o/p- 32
 /*
@@ -50,7 +56,7 @@ y==0, 32 answer
 println(gcd(0, 5))//o/p- 5
 println(gcd(5, 0))//o/p- 5
 
-gcd-
+-----------------------------------------------
 
 Mod  (%) operator
 a/b , a is dividend, b is divisor, answer is quotient
@@ -62,5 +68,4 @@ a % b , answer is remainder
 14/21 = 0
 14%21 = 14
 
-Greatest common divisor- https://byjus.com/maths/greatest-common-divisor/#:~:text=The%20greatest%20common%20divisor%20(GCD,can%20be%20divided%20by%205.
  */
