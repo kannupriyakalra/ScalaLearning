@@ -20,7 +20,6 @@ package Hackerrank
 import scala.io.StdIn.readLine
 
 object ComputingTheGCD {
-
   def gcd(x: Int, y: Int): Int = {
     if (y == 0) x
     else gcd(y, x % y)
