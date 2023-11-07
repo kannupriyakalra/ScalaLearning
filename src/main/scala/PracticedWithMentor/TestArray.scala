@@ -7,7 +7,7 @@ object TestArray extends App {
   val arr1 = Array(45, 52, 61)
 
   //printing array elements
-  println(arr1) //o/p- [I@b684286 as Array type has not overriden toString
+  println(arr1) //o/p- [I@b684286 as Array type has not override toString
 
   //1st way
   arr1.foreach(println)
@@ -16,24 +16,19 @@ object TestArray extends App {
   //52
   //61
 
+  arr1.foreach(x => println(x)) //desugar of line 26, equivalent to line 13 arr1.foreach(println)
+
   //2nd way
   println(arr1.mkString(" ")) //o/p- 45 52 61
   //  final def mkString(sep: String): String , Displays all elements of this collection in a string using a separator string. here sep is space.
 
   //3rd way
-  for (x <- arr1) {
+  val x: Unit = for (x <- arr1) { //when yield is not mentioned at end of for loop its return type is Unit, x: Unit
     println(x)
   }
   //o/p- 45
   //52
   //61
-
-  //4th way
-  arr1.foreach(x => println(x)) //desugar of line 22, equivalent to line 11 arr1.foreach(println)
-
-  val x = for (x <- arr1) { //when yield is not mentioned at end of for loop its return type is Unit, x: Unit
-    println(x)
-  }
 
 
   // Adding element in an array
@@ -81,22 +76,23 @@ object TestArray extends App {
 
 
   val arr7 = arr5.reverse
-  println(arr7.mkString(" ")) //o/p- 9 6 3
+  println("reverse example: " + arr7.mkString(" ")) //o/p- reverse example: 9 6 3
 
 
   // Accessing an array element
   var name = Array("gfg", "geeks", "GeeksQuize", "geeksforgeeks")
-  println(name(1)) //o/p- geeks
+  println("Accessing an array element: "+ name(1)) //o/p- Accessing an array element: geeks
 
-  // Updating anelement in an array
-  name(1) = "employee"
-  println(name(1)) //o/p-employee
+  // Updating an element in an array
+  name(1) = "employee" //as name is var
+  println("Updating an element in an array: "+ name(1)) //o/p-Updating an element in an array: employee
 
-  val xx = Array("1","2")// xx will always point to same location in memory but the object itself is mutable so its elements can be changed
+  val xx = Array("1","2")
   name = xx // as name is var so assigned a new array to it
+  println("assigned xx to name: "+ name.mkString(" ")) //o/p- assigned xx to name: 1 2
 
 //  xx = name not allowed ass xx is val
-  xx(1) = "abc"
+  xx(1) = "abc"// xx will always point to same location in memory but the object itself is mutable so its elements can be changed
   println("array is mutable example: " + xx.mkString(" ")) //o/p- array is mutable example: 1 abc
 
 
