@@ -12,7 +12,8 @@ object TestTailRecursion {
 
   //tail recursive example of factorial-
   def factorialTail(n: Int): Int = {
-    @tailrec //tell compiler explicitly that this method is tail recursive, this ensures its executed tail recursively. if annotation is not there check by debugging by putting break point by how stacks are made n if its done tail recursively in myFoldLeft in testList.scala
+    @tailrec //tell compiler explicitly that this method is tail recursive, this ensures its executed tail recursively. if annotation is not there example in myFoldLeft in testList.scala check if its
+    // tail recursive by debugging by putting break point by how stacks are made.
     def iter(x: Int, result: Int): Int = //creating a method locally in a method is allowed in scala and calling it in that scope
       if (x == 0) result
       else iter(x - 1, result * x)
@@ -21,6 +22,7 @@ object TestTailRecursion {
   }
 
   //2nd way of doing tail recursive example of factorial-
+  @tailrec
   def factorialTail2(n: Int, result: Int = 1): Int = {
     if (n == 0) result
     else factorialTail2(n - 1, result * n)
