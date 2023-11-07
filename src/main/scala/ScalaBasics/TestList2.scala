@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 object TestList2 extends App {
 

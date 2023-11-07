@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 object TestArray2 extends App {
 

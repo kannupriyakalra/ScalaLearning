@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 //https://alvinalexander.com/scala/concurrency-with-scala-futures-tutorials-examples/ code examples understood-
 

@@ -1,6 +1,6 @@
-package PracticedWithMentor
+package ScalaBasics
 
-import PracticedWithMentor.TestBinarySearchTree._
+import ScalaBasics.TestBinarySearchTree._
 
 object TestSet extends App {
 

@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 import java.util.UUID
 

@@ -11,7 +11,7 @@ On each merge stage, n elements are merged.
 Merge Sort time complexity is calculated using time per division stage. Since the merge process has linear time complexity, for n elements there will be n∗log 2 n division and merge stages.
  */
 
-package PracticedWithMentor
+package ScalaBasics
 
 object MergeSort {
 

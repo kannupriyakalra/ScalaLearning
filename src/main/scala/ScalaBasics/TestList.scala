@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 import org.scalatest.Assertions.intercept
 //uses of pattern matching

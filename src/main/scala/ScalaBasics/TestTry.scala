@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 import scala.io.StdIn
 import scala.util.{Failure, Success, Try}

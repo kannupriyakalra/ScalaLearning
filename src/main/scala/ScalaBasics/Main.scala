@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 object Main {
   def main(args: Array[String]): Unit = {

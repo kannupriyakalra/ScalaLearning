@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 //retry logic for calling a endpoint again
 

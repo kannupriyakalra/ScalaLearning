@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 //Partial function
 object TestPartialFunction extends App {

@@ -1,6 +1,6 @@
-package PracticedWithMentor
+package ScalaBasics
 
-import PracticedWithMentor.TestBinarySearchTree.Tree.minimum
+import ScalaBasics.TestBinarySearchTree.Tree.minimum
 
 object TestBinarySearchTree extends App {
 

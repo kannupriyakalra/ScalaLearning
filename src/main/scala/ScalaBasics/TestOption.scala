@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 /*
 -explored Option, for comprehension(4 ways)

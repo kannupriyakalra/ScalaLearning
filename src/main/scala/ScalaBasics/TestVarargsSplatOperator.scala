@@ -1,4 +1,4 @@
-package PracticedWithMentor
+package ScalaBasics
 
 //https://www.oreilly.com/library/view/scala-cookbook/9781449340292/ch05s08.html#:~:text=Use%20_*%20to%20adapt%20a%20sequence&text=This%20operator%20tells%20the%20compiler,fruits%20as%20a%20single%20argument
 object TestVarargsSplatOperator extends App{
