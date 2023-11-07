@@ -30,6 +30,8 @@ object TestArray extends App {
   //52
   //61
 
+  println("number of elements in the array: " + arr1.length) //o/p- number of elements in the array: 3
+  println("another way to find number of elements in the array: " + arr1.size) //o/p- another way to find number of elements in the array: 3
 
   // Adding element in an array
   var arr2 = new Array[String](4)
