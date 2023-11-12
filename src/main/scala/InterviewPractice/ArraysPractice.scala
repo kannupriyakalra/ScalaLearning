@@ -29,3 +29,6 @@ object ArraysPractice extends App {
   println(solution(Array(-1, -3)))//o/p-1
 
 }
+//sorting-nlogn + foldLeft - n = O(nlogn)
+//nlogn + n = nlogn ie the lower limit ie min this much iterations will be required.
+
