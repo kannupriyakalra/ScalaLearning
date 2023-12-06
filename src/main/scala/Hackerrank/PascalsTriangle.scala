@@ -39,7 +39,7 @@ every element is sum of its top and top left element.
 object PascalsTriangle {
 
   //given previous row, to compute next row-
-  def computeNextRow(prev: Array[Int]): Array[Int] = {
+  def computeNextRow(prev: Array[Int]): Array[Int] = { //time complexity- O(n), space complexity- O(n), n- size of array
 
     val n = prev.length + 1
     val next = new Array[Int](n)
@@ -61,6 +61,7 @@ object PascalsTriangle {
     val firstRow = Array(1)
     // println(firstRow.mkString(" "))
 
+    //   Alternative solution - 1 (not a functional solution as var is used)
     //    var prevRow = firstRow
     //    for (i <- 2 to k) {
     //      val nextRow = computeNextRow(prevRow)
@@ -68,12 +69,14 @@ object PascalsTriangle {
     //      println(nextRow.mkString(" "))
     //    }
 
+    //   Alternative solution - 2 (not a functional solution as println is used repeatedly, println is a side effect so this is not a pure function)
     //        (2 to k).foldLeft(firstRow) { (prevRow, i) =>
     //          val nextRow = computeNextRow(prevRow)
     //          println(nextRow.mkString(" "))
     //          nextRow
     //        }
 
+    //time complexity- O(n^2), space complexity- O(n)
     val (lastRow, result) = (2 to k).foldLeft((firstRow, firstRow.mkString)) { case ((prevRow, result), i) =>
       val nextRow = computeNextRow(prevRow)
       (nextRow, result + "\n" + nextRow.mkString(" ")) //use StringBuilder instead
@@ -84,6 +87,15 @@ object PascalsTriangle {
   }
 
 }
+/*
+time complexity- O(n^2)
+computeNextRow- O(n)
+(2 to k) - O(n)
+n * n
+
+space complexity- O(n)
+as that's the maximum extra space ie required. eg- for n = 10 , at a time only 9th row is required for 10th, every previous row is printed n memory released.
+ */
 
 /*
 given previous row, to compute next row,
@@ -99,3 +111,5 @@ Now use fold left on a range and call computeNextRow
 
 pre requisite- TestArray.scala
  */
+
+
