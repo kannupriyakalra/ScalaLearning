@@ -2,7 +2,8 @@ package ScalaBasics
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-object TestOptionT extends App{
+
+object TestOptionT extends App {
 
   val f1: Future[Int] = Future[Int](1)
   val f2: Future[Option[Int]] = Future(Some(1))
@@ -27,8 +28,20 @@ object TestOptionT extends App{
   }
 
   // How to increment f2: Future[Option[Int]]
+  val obj: OptionT[Int] = OptionT(f2)
+  val inc = obj.map(a => a + 1)
+  Thread.sleep(5000) //o/p without using sleep - OptionT: OptionT(Future(<not completed>))
+  println("OptionT: " + inc) //o/p- OptionT: OptionT(Future(Success(Some(2))))
+
+  val x = obj.value
+  println("x: " + x) //o/p- x: Future(Success(Some(1)))
+
+  // Alternate way-
   val f23: Future[Option[Int]] = OptionT(f2).map(a => a + 1).value
+  Thread.sleep(5000)
+  println(f23) // o/p- Future(Success(Some(2)))
 
   def abcd[A, B](o1: OptionT[A], f: A => B): OptionT[B] = o1.map(f)
+
 
 }
