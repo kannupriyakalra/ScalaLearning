@@ -183,7 +183,7 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
 
   //pattern match
   bob match {
-    case Person(x, y) => println("pattern matching " + x) //x is name, y is age , o/p- pattern matching Bob
+    case Person(x, y) => println("pattern matching: " + x) //x is name, y is age , o/p- pattern matching: Bob
   }
 
 
@@ -200,43 +200,49 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
    */
 
   /*
-  gagan explained-
-  pattern means it can be used in pattern matching.
-  boilerplate means apply, unapply, copy, toString, hashCode, equals etc methods are available by default. Normal class doesn't have these and they need to be implemented on your own.
-  val bob: Person =  Person.apply("Bob", 54) //try to get into apply you can't as it gets generated at compile time, its a replacement of new, we can never see it, it goes into byte code by compiler.
-  hash- when a big string is given as i/p to hash fxn o/p is 10char string ie hash of that string. to compare this big i/p string with another big i/p string , we can find hash of both to compare,
+  detailed explanation-
+  -pattern means it can be used in pattern matching.
+  -boilerplate means apply, unapply, copy, toString, hashCode, equals etc methods are available by default. Normal class doesn't have these and they need to be implemented on your own.
+  -val bob: Person =  Person.apply("Bob", 54) //try to get into apply you can't as it gets generated at compile time, its a replacement of new, we can never see it, it goes into byte code by compiler.
+  -hash- when a big string is given as i/p to hash function o/p is 10char string ie hash of that string. to compare this big i/p string with another big i/p string , we can find hash of both to compare,
   its kind of a  compression, if 2 hashes are equal then their i/p string/object on which they are called may or may not be equal. if 2 hashes are unequal,then their i/p are not equal. So to get this
-  probability first 2 hashes are compared then 2 strings are compared to save time. in java, super class is called Object that has hashCode, as all classes extend it so all have it.
-  2 objects are compared by comparing individual values of all fields of bob n billy which is done by equals method. == and .equals are same.
+  probability first 2 hashes are compared then 2 strings are compared to save time. In java, super class is called Object that has hashCode, as all classes extend it so all have it.
 
-    class Person(name: String, age: Int)
+  -2 objects are compared by comparing individual values of all fields of bob n billy which is done by equals method. == and .equals are same.
+  -We now create a class and not case class to compare with case class:
 
-  //its object can be constructed without 'new' keyword as internally its calling apply method and apply method can be called without mentioning explicitly---val bob = new Person("Bob",54)
-  val bob: Person = new Person("Bob", 54) // Person.apply("Bob", 54)
-  println(bob.hashCode()) //o/p- 1788943694
-
+  class Person(name: String, age: Int)
+  val bob: Person = new Person("Bob", 54)
   val billy = new Person("Bob", 54)
+
   println(bob == billy) //o/p-false
   println(bob.equals(billy)) //o/p-false
 
-  reference equality is checked in case of normal class, by default. in case class, it overrides this method and make it check value equality for 2 object. ie why we only make case class
-  in scala so we can check value equality, we don't usually need reference equality. In case class, if reference is same, they are same objects as they pt to same location in memory, if reference is
-  not same, then we compare the content ie compare name n age, in case class it checks first reference n then values. if reference matches it doesn't check values n return answer, if reference doesn't
-  match then it check values inorder to save time. Bob n Billy are 2 different objects and they have different references.
+  -Using .equals method, reference equality is checked in case of normal class, by default.
+  -Using .equals method, in case class, it overrides this method and make it check value equality for 2 object. ie why we only make case class in scala so we can check value equality, we don't
+  usually need reference equality.
+  -Using .equals method, in case class, if reference is same, they are same objects as they pt to same location in memory, if reference is
+  not same, then we compare the content ie compare name n age, in case class it checks first reference n then values. if reference matches it doesn't check values n return answer true, if
+  reference doesn't match then it check values, it does this inorder to save time. Bob n Billy are 2 different objects and they have different references.
 
-  What is reference?
+  -What is reference?
   val x = new Person("anil",10) (x is reference to new Person constructed, x has address and ie called reference and at that address value is kept)
   val y = x (y is pointing to x, x and y are referring to same address , x==y, y has same address as x)
-  val z = new Person("anu",11) ( z has new address, z is not equal to x, new likhte he new address banta hai jispe value rakhi jate hai, new means asking os memory)
+  val z = new Person("anu",11) ( z has new address, z is not equal to x, as soon as new keyword is used, new address is created on which value is kept, new means asking os memory)
 
-  collections that rely on equality and hash code means- set , a set has distinct elements, if a element already exists then it doesn't get inserted. A set does .equals on every new element ie to be
-   inserted with all existing elements.
+  -.equals is used in Set to ensure all elements are distinct. Collections that rely on equality and hash code example- set , a set has distinct elements, if a element already exists then it
+   doesn't get inserted. A set does .equals on every new element ie to be inserted with all existing elements.
 
-  serialization means 2 objects bob and billy when executed will be created in memory ie RAM, if we close laptop without running program they ll be lost, when a program is run, it uses
-   RAM memory(volatile memory) and not HDD(persistent storage), eg creating 2 object bob n billy took 2 hrs so we ll serialise their o/p that means write their o/p to disk.
-   Serialise means writing an object to disk(HDD) . Deserialize means reading an object from disk.
-   over the wire means when a service is called it returns objects json serialised (ie serialise them ie save them so they can be returned and ie done in json format) and after receiving we deserialize
+-Serialise means writing an object to disk(HDD) ie converting to binary 0s and 1s . Deserialize means reading an object from disk.
+  serialization example-  2 objects bob and billy when executed will be created in memory ie RAM, if we close laptop without running program they ll be lost, when a program is run as it uses
+   RAM memory(volatile memory, fast, temporary storage) and not HDD(persistent storage), as creating these 2 objects took 2 hrs so we ll serialise their o/p that means write their o/p to disk and
+   then send it over the wire
+
+   over the wire means when a service is called it returns objects json serialised (ie serialise them ie save them in json format) and after receiving we deserialize
    it ie read it using our json deserializer.
+
+   Json is a data interchange format for serialising, other format is binary. We use json as then it can be parsed as a string as json looks like a string.
+
    json is key value pair
    Person{ //json format for class person
    Name: Billy,
@@ -244,11 +250,15 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
    }
    serialise deserialize means converting into string n they are read using json, writing object into disk n reading from it
 
-   for every case class a companion object is available by default and that has apply method ie why person.apply is called, as person is static class. We don't have to make person companion object
-    explicitly unless we have to add some more functionality to it.
+   json serialised means object to string (here string is referred as json format)
+   json deserialize means string to object.
 
-   val bob: Person =  Person("Bob", 54), name of companion object is Person and that has a method apply, bob is just a instance of Person class and bob is not that companion object. Companion object
-   is the static class ie internally called.
+  - for every case class a companion object is available by default and that has apply method ie why person.apply is called, as companion object person is static class and ie used to create case
+  class's object. We don't have to make person companion object explicitly unless we have to add some more functionality to it.
+
+   val bob: Person =  Person("Bob", 54), name of companion object is Person and that has a method apply, bob is just a instance of Person case class and bob is not that companion object.
+   Companion object is the static class ie internally called.
+   Apply is like a constructor give it arguments and use it to create object.
 
   apply- create objects
   unapply- does pattern matching
