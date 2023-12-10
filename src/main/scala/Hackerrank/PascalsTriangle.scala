@@ -63,13 +63,16 @@ object PascalsTriangle {
     val firstRow = Array(1) //as constraint is k lies b/w 2 to 10, so we can set first row.
 
     //time complexity- O(n^2), space complexity- O(n)
-    val (lastRow, result) = (2 to k).foldLeft((firstRow, firstRow.mkString)) { case ((prevRow, result), i) => //can write (lastRow, result) as t@(lastRow, result) means tuple named t looks like (lastRow, result)
+    val (lastRow, result) = (2 to k).foldLeft((firstRow, firstRow.mkString)) ({ case ((prevRow, result), i) => //can write (lastRow, result) as t@(lastRow, result) means tuple named t looks like (lastRow, result)
       val nextRow = computeNextRow(prevRow)
-      (nextRow, result + "\n" + nextRow.mkString(" ")) //use StringBuilder instead
-    }
+      (nextRow, result + "\n" + nextRow.mkString(" ")) //use StringBuilder instead as this is inefficient, StringBuilder takes all intermediate string and create later. This is inefficient as it creates a new string by merging 2 string at every step and release memory and create new memory. google it.
+    })
 
     //println(t._2)
     println(result)
+
+    //we used case here so we can use pattern matching to further use parts of tuple (prevRow, result) directly in function computation,
+    // if we removed case, we ll have to write (t, i) and use t._1 and t._2 in function definition.
 
     //   Alternative solution - 1 (not a functional solution as var is used)
     //    println(firstRow.mkString(" "))
@@ -81,12 +84,12 @@ object PascalsTriangle {
     //    }
 
     //   Alternative solution - 2 (not a functional solution as println is used repeatedly, println is a side effect so this is not a pure function)
-    //        println(firstRow.mkString(" "))
-    //        (2 to k).foldLeft(firstRow) { (prevRow, i) =>
-    //          val nextRow = computeNextRow(prevRow)
-    //          println(nextRow.mkString(" "))
-    //          nextRow
-    //        }
+    //            println(firstRow.mkString(" "))
+    //            (2 to k).foldLeft(firstRow) { (prevRow, i) =>
+    //              val nextRow = computeNextRow(prevRow)
+    //              println(nextRow.mkString(" "))
+    //              nextRow //here nextRow get updated into prevRow for next value of range
+    //            }
   }
 
 }
