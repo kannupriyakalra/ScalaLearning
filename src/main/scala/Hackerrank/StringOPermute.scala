@@ -18,7 +18,7 @@ object StringOPermute extends App {
 //      swapHelper(s.toList).mkString("")
 //    }
 
-  //Solution 2 -
+  //Solution 2 - Best
 
   def swapTheCharacters(s: String): String = { //time complexity = O(n), space complexity = O(n)
     @tailrec
