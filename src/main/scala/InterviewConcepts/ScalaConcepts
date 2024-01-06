@@ -1,0 +1,115 @@
+1. what is difference between tail recursion and normal recursion with respect to space used for recursion?
+
+
+The main difference between tail recursion and normal recursion lies in how the call stack is managed. Let's explore the distinctions:
+
+Tail Recursion:
+
+In tail recursion, the recursive call is the last operation in the function.
+When a function is tail recursive, the compiler or interpreter can optimize the recursion by reusing the current function's stack frame for the next function call. This is known as "tail call optimization" (TCO) or "tail call elimination."
+With tail call optimization, the stack space complexity becomes constant, and the recursive function effectively becomes an iterative loop. The stack does not grow with each recursive call.
+Example of tail recursion in Scala:
+
+def factorialTailRec(n: Int, acc: BigInt = 1): BigInt = {
+  if (n == 0) acc
+  else factorialTailRec(n - 1, acc * n)
+}
+
+example- does not give stack overflow error
+def fun(): Unit = fun()
+fun()
+
+Normal Recursion:
+
+In normal recursion, the recursive call is not the last operation in the function, and there are additional operations to be performed after the recursive call returns.
+Each recursive call adds a new frame to the call stack. The stack continues to grow until the base case is reached and then begins to unwind as the functions return.
+For a very long recursion, it gives stack overflow error.
+Example of normal recursion in Scala:
+
+def factorialNormal(n: Int): BigInt = {
+  if (n == 0) 1
+  else n * factorialNormal(n - 1)
+}
+
+example- to create stack overflow error.
+def fun(): Int = {
+  println("hello")
+  1 + fun()
+}
+fun()
+
+Impact on stack Space Complexity:
+
+Tail recursion, with proper tail call optimization, can have constant stack space complexity, making it more memory-efficient.
+Normal recursion typically has stack space complexity proportional to the depth of the recursion, as each recursive call adds a new frame to the call stack.
+
+Note:
+
+Not all languages or compilers automatically perform tail call optimization. Some languages and compilers, like Scala and certain versions of JavaScript engines, do support tail call optimization.
+In languages or environments without built-in tail call optimization, both tail recursion and normal recursion may have similar space complexity characteristics.
+
+Tail recursive is for stack call optimisation, a concept made to not get stack overflow error in case of recursive functions. A tail recursive
+function uses only one stack.
+
+When we talk about time and space complexity we talk about heap memory and not stack memory.
+
+------------------------------------------------------------
+2. What is a pure function?
+
+def fun(): Int = {
+  var i = 0
+  i = i + 1
+  i
+}
+
+fun()
+
+As per TDP, this is a pure function.
+Even when it uses var, as that mutation is contained and ie why allowed.
+
+------------------------------------------------------------
+3. What is functional programming?
+
+------------------------------------------------------------
+4. How to tell if a given solution is functional or not?
+
+Check if the function used is a pure function, if yes, then its a functional solution.
+
+------------------------------------------------------------
+5. what is the sorting algorithm used in .sortBy?
+
+In Scala, the sortBy method is typically implemented using a stable sorting algorithm called "TimSort." TimSort is a hybrid sorting algorithm derived from merge sort and insertion sort.
+It was designed to perform well on many kinds of real-world data and takes advantage of already ordered data and runs in O(n log n) time complexity in the worst case.
+TimSort is the default sorting algorithm for sequences in Scala, including the List class. It was introduced in Scala 2.13.0.
+It's worth noting that the stability of the sorting algorithm means that if two elements have equal values with respect to the sorting criteria, their original order is preserved in the sorted result.
+
+------------------------------------------------------------
+6. Difference b/w list and vector
+
+list- sequential access
+vector- random access
+
+------------------------------------------------------------
+7. does scala have immutable array? --??
+
+scala> scala.collection.immutable.ArraySeq[Int](1,2,3,4)
+val res70: scala.collection.immutable.ArraySeq[Int] = ArraySeq(1, 2, 3, 4)
+
+scala> res70(0) = 100
+-- [E008] Not Found Error: -----------------------------------------------------
+1 |res70(0) = 100
+  |^^^^^
+  |value update is not a member of scala.collection.immutable.ArraySeq[Int] - did you mean res70.updated?
+1 error found
+
+scala> scala.collection.mutable.ArraySeq[Int](1,2,3,4)
+val res71: scala.collection.mutable.ArraySeq[Int] = ArraySeq(1, 2, 3, 4)
+
+scala> res71(0) = 100
+
+scala> res71
+val res72: scala.collection.mutable.ArraySeq[Int] = ArraySeq(100, 2, 3, 4)
+
+scala>
+
+https://docs.scala-lang.org/sips/scala-2-8-arrays.html
