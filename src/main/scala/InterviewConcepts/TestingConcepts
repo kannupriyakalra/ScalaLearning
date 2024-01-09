@@ -1,0 +1,66 @@
+1. Integration Tests
+
+The purpose of these tests are to ensure that you do not break any contracts between downstream and/or upstream components your application integrates
+with. You should ensure that all integration points are tested. They are performed against the real downstream/upstream components in integration
+environment that we have separately created by replicating the production environment.
+
+---check if called against stub?
+
+
+-------------------------------------------------------
+2. difference between unit test and functional test.
+
+functional testing checks the software's functionality from the user's perspective,
+while unit testing checks the software's internal workings from the developer's perspective.
+
+Functional testing is a black-box technique that does not require access to the source code,-----check?
+while unit testing is a white-box technique that requires access to the source code.
+
+Functional testing is usually done by testers, while unit testing is usually done by developers.
+Functional testing is performed during the level of application testing, while unit testing is performed during the software development cycle.
+
+Functional testing has lower number of test cases, higher cost and maintenance, and slower speed than unit testing.
+Functional testing helps to find defects in the functionality, while unit testing helps to find bugs in the code. ¹²
+
+Source: Conversation with Bing, 8/1/2024
+(1) What is the difference between unit tests and functional tests?. https://stackoverflow.com/questions/2741832/what-is-the-difference-between-unit-tests-and-functional-tests.
+(2) Difference Between Unit Tests and Functional Tests. https://www.geeksforgeeks.org/difference-between-unit-tests-and-functional-tests/.
+(3) What is the difference between unit tests and functional tests?. https://stackoverflow.com/questions/2741832/what-is-the-difference-between-unit-tests-and-functional-tests.
+(4) Difference Between Unit Tests and Functional Tests. https://www.geeksforgeeks.org/difference-between-unit-tests-and-functional-tests/.
+(5) Unit Testing vs. Functional Testing: In-Depth Comparison - Bright Security. https://brightsec.com/blog/unit-testing-vs-functional-testing/.
+(6) Difference between Functional Testing and Unit Testing. https://www.browserstack.com/guide/difference-between-functional-testing-and-unit-testing.
+
+-------------------------------------------------------
+
+3. difference between acceptance test and functional test.
+
+No, acceptance testing and functional testing are not the same. They have different purposes, scopes, and audiences. 😊
+
+Acceptance testing is a validation activity that checks whether the software meets the customer's needs and expectations. It is usually done by the customer or a representative of the customer, such as a product owner. Acceptance testing focuses on the end-user's perspective and the business requirements. It is performed on a production-like environment and uses realistic scenarios and data. Acceptance testing helps to ensure that the software is fit for use and ready for delivery. ¹²
+
+Functional testing is a verification activity that checks whether the software performs the functions that it is supposed to do. It is usually done by the developers or testers of the software. Functional testing focuses on the software's perspective and the technical specifications. It is performed on various levels of testing, such as unit, integration, system, and regression. It uses test cases that cover all the possible inputs, outputs, and behaviors of the software. Functional testing helps to find defects and errors in the software's functionality. ¹²
+
+I hope this answer helps you understand the difference between acceptance testing and functional testing. If you want to learn more about these testing types, you can read [this article](^1^) or [this question](^2^). If you have any other questions, feel free to ask me. 😊
+
+Source: Conversation with Bing, 8/1/2024
+(1) Difference between acceptance test and functional test?. https://stackoverflow.com/questions/3370334/difference-between-acceptance-test-and-functional-test.
+(2) testing - What's the difference between unit, functional, acceptance .... https://stackoverflow.com/questions/4904096/whats-the-difference-between-unit-functional-acceptance-and-integration-test.
+(3) Difference between acceptance test and functional test?. https://stackoverflow.com/questions/3370334/difference-between-acceptance-test-and-functional-test.
+(4) testing - What's the difference between unit, functional, acceptance .... https://stackoverflow.com/questions/4904096/whats-the-difference-between-unit-functional-acceptance-and-integration-test.
+(5) What's the difference between commissioning, acceptance testing and .... https://kw-engineering.com/whats-difference-commissioning-acceptance-testing-functional-testing/.
+(6) testing - Differences between User Acceptance Test and Test Case .... https://stackoverflow.com/questions/44089438/differences-between-user-acceptance-test-and-test-case-scenario-and-functional-t.
+
+-------------------------------------------------------
+
+4. regression testing -------are we doing this? this is a process always done.?
+
+In the above context, regression means a situation where a change in the code causes a previously working functionality to fail or behave incorrectly.
+ Regression testing is a technique to prevent or detect such regressions by re-running existing tests after code changes. ¹²
+
+Source: Conversation with Bing, 8/1/2024
+(1) What is Regression Testing? Definition, Tools, Examples - Katalon. https://katalon.com/resources-center/blog/regression-testing.
+(2) Regression testing - Wikipedia. https://en.wikipedia.org/wiki/Regression_testing.
+(3) What is Regression Testing? Software Testing Tools & Examples. https://www.knowledgehut.com/blog/software-testing/regression-testing-in-software-testing.
+(4) Understanding the Role of Regression Testing - Spiceworks. https://www.spiceworks.com/tech/devops/articles/what-is-regression-testing/.
+
+-------------------------------------------------------
