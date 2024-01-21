@@ -8,7 +8,7 @@ object ObjectOrientation extends App {
     val age: Int = 0
 
     //define methods
-    def eat() = println("I'm eating")
+    def eat(): Unit = println("I'm eating")
   }
 
   val anAnimal = new Animal
@@ -171,20 +171,35 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
 
   //its object can be constructed without 'new' keyword as internally its calling apply method and apply method can be called without mentioning explicitly---val bob = new Person("Bob",54)
   val bob: Person = Person("Bob", 54) //equivalent to Person.apply("Bob", 54)
-  println(bob.hashCode()) //o/p- 1788943694
+  println("Hashcode of bob: " + bob.hashCode()) //o/p- Hashcode of bob: 1788943694
 
   val billy = Person("Bob", 54)
+  println("Hashcode of billy: " + billy.hashCode()) //o/p- Hashcode of billy: 1788943694
+
   // == and .equals are same and they compare value inside object in case of case class. For normal class, they check reference equality.
   println(bob == billy) //o/p-true
   println(bob.equals(billy)) //o/p-true
 
-  val s = Set(1, 1, 2)
-  println(s) //o/p- Set(1, 2) a set removes duplicate on its own.
+  val s1: Set[Int] = Set(1, 1, 2)
+  println("Set s1 is: " + s1) //o/p- Set(1, 2) a set removes duplicate on its own.
+  val s2: Set[Int] = Set(1, 2)
+  println("Set s2 is: " + s2) //o/p- Set(1, 2)
+  println(" Checking s1 == s2: " + (s1 == s2)) //o/p-true
+  println(" Checking s1.eq(s2): " + s1.eq(s2)) //o/p-false //eq checks reference equality, its checking if they are same objects which they are not ie why its false
 
-  //pattern match
+  //Case class has a default implementation of the 'toString' method that shows the class name and the parameter value.
+  println(bob) // Person(Bob,54), shows the class name and parameters
+
+  //pattern match and decomposition- It can be easily pattern matched and decomposed using the unapply method.
   bob match {
-    case Person(x, y) => println("pattern matching: " + x) //x is name, y is age , o/p- pattern matching: Bob
+    case Person(n, a) => println(s"$n is $a years old") //n is name, a is age , o/p- Bob is 54 years old
+    case _ => println("Not a person")
   }
+
+  //Case class inherits from the Product trait, which provides some useful methods to access the parameters.
+  println(bob.productArity) // 2, number of parameters
+  println(bob.productElement(0)) // Bob, first parameter
+
 
 
 
@@ -205,7 +220,7 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
   -boilerplate means apply, unapply, copy, toString, hashCode, equals etc methods are available by default. Normal class doesn't have these and they need to be implemented on your own.
   -val bob: Person =  Person.apply("Bob", 54) //try to get into apply you can't as it gets generated at compile time, its a replacement of new, we can never see it, it goes into byte code by compiler.
   -hash- when a big string is given as i/p to hash function o/p is 10char string ie hash of that string. to compare this big i/p string with another big i/p string , we can find hash of both to compare,
-  its kind of a  compression, if 2 hashes are equal then their i/p string/object on which they are called may or may not be equal. if 2 hashes are unequal,then their i/p are not equal. So to get this
+  its kind of a compression, if 2 hashes are equal then their i/p string/object on which they are called may or may not be equal. if 2 hashes are unequal,then their i/p are not equal. So to get this
   probability first 2 hashes are compared then 2 strings are compared to save time. In java, super class is called Object that has hashCode, as all classes extend it so all have it.
 
   -2 objects are compared by comparing individual values of all fields of bob n billy which is done by equals method. == and .equals are same.
@@ -254,7 +269,7 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
    json deserialize means string to object.
 
   - for every case class a companion object is available by default and that has apply method ie why person.apply is called, as companion object person is static class and ie used to create case
-  class's object. We don't have to make person companion object explicitly unless we have to add some more functionality to it.
+  class's object bob. We don't have to make person companion object explicitly unless we have to add some more functionality to it.
 
    val bob: Person =  Person("Bob", 54), name of companion object is Person and that has a method apply, bob is just a instance of Person case class and bob is not that companion object.
    Companion object is the static class ie internally called.
@@ -263,20 +278,20 @@ are telling the compiler to create me a new class Carnivore_Anonymous_35728 and 
   apply- create objects
   unapply- does pattern matching
 
-  Some, none can be done on case class, case object only, pattern matching is slicing n dicing to see what it is. unapply- call during pattern matching.
-  when case keyword is added to class or object both get the same features.
+  -Some, none can be done on case class, case object only, pattern matching is slicing n dicing to see what it is. unapply- call during pattern matching.
+  -when case keyword is added to class or object both get the same features.
    */
 
   //exceptions
-    try {
-      //code that can throw exception
-      val x: String = null
-      x.length
-    } catch { //in java, catch(Exception e){...}
-      case e: Exception => "some faulty error message"
-    } finally {
-      //execute some code no matter what
-    }
+  try {
+    //code that can throw exception
+    val x: String = null
+    x.length
+  } catch { //in java, catch(Exception e){...}
+    case e: Exception => "some faulty error message"
+  } finally {
+    //execute some code no matter what
+  }
 
 
   /*
