@@ -2,6 +2,21 @@ package ScalaBasics
 
 object TestZip extends App {
 
+  //write a function that takes 2 functions as input and returns a new function that takes a tuple as input and returns a tuple as output.
+
+  def zipFunction[A1, B1, A2, B2](f1: A1 => B1, f2: A2 => B2): ((A1, A2)) => (B1, B2) = {
+
+    (x: (A1, A2)) => (f1(x._1), f2(x._2))
+  }
+
+  println("output of zipFunction:  ")
+  val f: Int => String = (a: Int) => a.toString
+  val g: Int => String = (a: Int) => (a * 2).toString
+  val r: ((Int, Int)) => (String, String) = zipFunction(f, g)
+  println(r(10, 10))
+  println(r(1, 2))
+  println()
+
   // write a function that takes 2 either and returns a zipped either that has corresponding left and right zipped together and gives none for one left and one right pair.
   // if both either s are left then some
   // if both either s are right then some
