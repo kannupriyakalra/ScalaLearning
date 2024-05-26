@@ -2,6 +2,26 @@ package ScalaBasics
 
 object TestZip extends App {
 
+  //Write a function that takes two Maps (dictionaries) and returns a new Map containing only the keys present in both input Maps.
+  // The values for these keys should be tuples, where each tuple contains the corresponding values from the two input Maps.
+
+  /*
+  For each key of m1 we check if m2 contains that key, we ignore if it doesn't.
+  If it has then we pair the 2 values.
+   */
+  def zipMap[K, V1, V2](m1: Map[K, V1], m2: Map[K, V2]): Map[K, (V1, V2)] = {
+
+    m1.toList.flatMap { case (key, v1) =>
+      m2.get(key).map(v2 => (key, (v1, v2))).toList
+    }.toMap
+
+  }
+
+  val m: Map[Int, String] = Map((1, "a"), (2, "b"), (3, "c"))
+  val n: Map[Int, String] = Map((0, "a"), (2, "e"), (3, "l"), 4 -> "d")
+  val o: Map[Int, (String, String)] = zipMap(m, n) //o/p- Map((2, (b,e) ), (3, (c,l) ) )
+
+
   //write a function that takes 2 functions as input and returns a new function that takes a tuple as input and returns a tuple as output.
 
   def zipFunction[A1, B1, A2, B2](f1: A1 => B1, f2: A2 => B2): ((A1, A2)) => (B1, B2) = {
