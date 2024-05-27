@@ -13,15 +13,14 @@ object TestZip extends App {
 
     (l1, l2) match {
       case (h1 :: t1, h2 :: t2) => (h1, h2) :: zipList(t1, t2)
-      case (h1 :: t1, Nil) => Nil
-      case (Nil, h2 :: t2) => Nil
+      case (_ :: _, Nil) => Nil
+      case (Nil, _ :: _) => Nil
       case (Nil, Nil) => Nil
     }
 
   }
 
   val list1: List[Int] = List(1, 2, 3, 4, 5, 6)
-
   val list2: List[String] = List("a", "b", "c")
 
   println("output of zipList:  ")
