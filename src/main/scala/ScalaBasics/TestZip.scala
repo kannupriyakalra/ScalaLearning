@@ -2,6 +2,34 @@ package ScalaBasics
 
 object TestZip extends App {
 
+  //Write a function that zips 2 list
+
+  /*
+  1. extract one element from each list.
+  2. pair the respective elements in a tuple.
+  3. repeat again for all elements in the list respectively, make a list out of these tuples.
+   */
+  def zipList[A, B](l1: List[A], l2: List[B]): List[(A, B)] = {
+
+    (l1, l2) match {
+      case (h1 :: t1, h2 :: t2) => (h1, h2) :: zipList(t1, t2)
+      case (h1 :: t1, Nil) => Nil
+      case (Nil, h2 :: t2) => Nil
+      case (Nil, Nil) => Nil
+    }
+
+  }
+
+  val list1: List[Int] = List(1, 2, 3, 4, 5, 6)
+
+  val list2: List[String] = List("a", "b", "c")
+
+  println("output of zipList:  ")
+  val resList = zipList(list1, list2)
+  println(resList) // List( (1, "a"), (2, "b"), (3, "c") )
+  println()
+
+
   //Write a function that takes two Maps (dictionaries) and returns a new Map containing only the keys present in both input Maps.
   // The values for these keys should be tuples, where each tuple contains the corresponding values from the two input Maps.
 
@@ -21,6 +49,9 @@ object TestZip extends App {
   val n: Map[Int, String] = Map((0, "a"), (2, "e"), (3, "l"), 4 -> "d")
   val o: Map[Int, (String, String)] = zipMap(m, n) //o/p- Map((2, (b,e) ), (3, (c,l) ) )
 
+  println("output of zipMap:  ")
+  println(o)
+  println()
 
   //write a function that takes 2 functions as input and returns a new function that takes a tuple as input and returns a tuple as output.
 
