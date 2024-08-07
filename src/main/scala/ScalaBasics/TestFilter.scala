@@ -2,7 +2,7 @@ package ScalaBasics
 
 object TestFilter extends App {
 
-  // Create a filter on an Option
+  // Create a filter on an Option- filter out the contents of the option if it doesn't satisfy the predicate.
   def filterOption[A](option: Option[A], predicate: A => Boolean): Option[A] = {
     option match {
       case Some(value) => if (predicate(value)) Some(value) else None
@@ -16,6 +16,8 @@ object TestFilter extends App {
 
   println(filterOption(someOption, isEven)) // Output: Some(10)
   println(filterOption(noneOption, isEven)) // Output: None
+  println(someOption.filter(isEven)) // Output: Some(10)
+  println(noneOption.filter(isEven)) // Output: None
 
   // Implement filter on a List
   def filterList[A](list: List[A], predicate: A => Boolean): List[A] = {
@@ -33,6 +35,7 @@ object TestFilter extends App {
   // Typeclasses
   // Make a generic filter that works on both list and option
   // Higher Kinded Types, F[_] is another type parameter that we have introduced and its a higher kinded type. List, Option above is replaced by F.
+  // Below code is an example of adhoc polymorphism
   trait Filterable[F[_]]{
     def filterElements[A](input: F[A], predicate: A => Boolean): F[A]
 
