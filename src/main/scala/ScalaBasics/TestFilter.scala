@@ -19,7 +19,13 @@ object TestFilter extends App {
   println(someOption.filter(isEven)) // Output: Some(10)
   println(noneOption.filter(isEven)) // Output: None
 
-  // Implement filter on a List
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  // Implement filter on a List- only the elements that pass the predicate function get to stay
   def filterList[A](list: List[A], predicate: A => Boolean): List[A] = {
     list match {
       case head :: tail => if (predicate(head)) head :: filterList(tail, predicate) else filterList(tail, predicate)
@@ -31,6 +37,13 @@ object TestFilter extends App {
   val greaterThanTwo: Int => Boolean = (number: Int) => number > 2
 
   println(filterList(numbers, greaterThanTwo)) // Output: List(3, 4, 5)
+  println(numbers.filter(greaterThanTwo)) // Output: List(3, 4, 5)
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   // Typeclasses
   // Make a generic filter that works on both list and option
