@@ -18,18 +18,24 @@ object TestOrdering extends App {
 
   case class Person(name: String, age: Int)
 
+  case object Person {
+
+    // sort by age
+    implicit object PersonOrdering extends Ordering[Person] { //we made it implicit so it can be sent implicitly in line35.
+      override def compare(a: Person, b: Person): Int = a.age.compare(b.age)
+    }
+
+  }
+
   val person1 = Person("bob", 30)
   val person2 = Person("ann", 32)
 
-  // sort by age
-  implicit object PersonOrdering extends Ordering[Person] { //we made it implicit so it can be sent implicitly in line34.
-    def compare(a: Person, b: Person): Int = a.age.compare(b.age)
-  }
 
-  println(PersonOrdering.compare(person1, person2)) // o/p- -1 negative ie person1 is less in age to person2
+  println(Person.PersonOrdering.compare(person1, person2)) // o/p- -1 negative ie person1 is less in age to person2
 
 
   //implemented Person Ordering on Tree[Person]
+
   import TestBinarySearchTree._
 
   val t: Tree[Person] = Empty.insert(person1).insert(person2)
@@ -37,6 +43,11 @@ object TestOrdering extends App {
 
   //to insert values inside tree use PersonOrdering as tree s insert method is generic and requires an ordering to compare person based on age as ann is 32 and ie > 30 so it went to right node.
 }
+
+/*
+When compiler looks for implicit instance of PersonOrdering, it tries to find it in the same file from where it is at the moment or in the companion object of
+the type which is using it example here Person
+ */
 
 
 
