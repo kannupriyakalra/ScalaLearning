@@ -25,6 +25,15 @@ object TestOrdering extends App {
       override def compare(a: Person, b: Person): Int = a.age.compare(b.age)
     }
 
+    //2nd way of creating implicit instance of Ordering[Person]
+    implicit val ordering = new Ordering[Person] {
+      override def compare(a: Person, b: Person): Int = a.age.compare(b.age)
+    }
+
+    //3rd way of creating implicit instance of Ordering[Person]
+    implicit val ordering2: Ordering[Person] =
+      (a: Person, b: Person) => a.age.compare(b.age)
+
   }
 
   val person1 = Person("bob", 30)
