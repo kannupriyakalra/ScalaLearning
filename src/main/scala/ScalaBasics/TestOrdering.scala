@@ -45,8 +45,8 @@ object TestOrdering extends App {
 }
 
 /*
-When compiler looks for implicit instance of PersonOrdering, it tries to find it in the same file from where it is at the moment or in the companion object of
-the type which is using it example here Person
+When compiler looks for implicit instance of PersonOrdering, it tries to find it in the same file from where it is at the moment, in the companion object of
+the type which is using it example here Person and also looks in Ordering.scala s companion object.
  */
 
 
