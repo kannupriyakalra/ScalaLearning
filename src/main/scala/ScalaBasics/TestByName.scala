@@ -1,8 +1,9 @@
 package ScalaBasics
 
 object TestByName extends App {
-  def myIf(predicate: Boolean, ifTrue: () => Int, ifFalse: => Int): Int = {
-    if (predicate) ifTrue() else ifFalse
+  def myIf[A](predicate: Boolean, ifTrue: () => A, ifFalse: => A): A = { //made the type Int as A as nothing related to Int was happening in myIf's definition, by making it generic, we could now use it
+    //for a boolean returning function 0 on line 32 as well.
+    if (predicate) ifTrue() else ifFalse //execution of ifTrue will happen only when its called.
   }
 
 
@@ -23,8 +24,23 @@ object TestByName extends App {
     ifFalse = b
   )
 
-
   assert(result == 567)
+
+  assert {
+    myIf(
+      result == 567
+      , () => {
+        println("Hello true!")
+        println("Bye true!")
+        true
+      }
+      , {
+        println("Hello false!")
+        println("Bye false!")
+        false
+      }
+    )
+  }
 
   println("Congratulations ! 'Do what you have to do, until you can do what you want to do.' Oprah Winfrey")
 
