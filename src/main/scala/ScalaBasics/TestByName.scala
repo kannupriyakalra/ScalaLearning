@@ -2,14 +2,23 @@ package ScalaBasics
 
 object TestByName extends App {
   def myIf[A](predicate: Boolean, ifTrue: () => A, ifFalse: => A): A = { //made the type Int as A as nothing related to Int was happening in myIf's definition, by making it generic, we could now use it
-    //for a boolean returning function 0 on line 32 as well.
+    //for a boolean returning function 0 on line 32 as well. so we have 2 generic function zero as parameter.
     if (predicate) ifTrue() else ifFalse //execution of ifTrue will happen only when its called.
   }
 
+//  val a: Exception = {
+//    new Exception("Wrong path")
+//  }
+
+//  lazy val a: Nothing = {
+//    throw new Exception("Wrong path")
+//  }
 
   lazy val a: Int = {
     throw new Exception("Wrong path")
   }
+
+  //here a is never called ie why this code is not throwing an exception, if we remove lazy, an exception will be thrown. a:Int or a:String as when we throw then a: Nothing and Int is a supertype of Nothing.
 
   lazy val b: Int = {
     println("creating 'b'")
