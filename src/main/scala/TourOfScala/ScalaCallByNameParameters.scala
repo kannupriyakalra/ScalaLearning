@@ -1,6 +1,6 @@
-package ScalaBasics
+package TourOfScala
 
-object TestByName extends App {
+object ScalaCallByNameParameters extends App {
   def myIf[A](predicate: Boolean, ifTrue: () => A, ifFalse: => A): A = { //made the type Int as A as nothing related to Int was happening in myIf's definition, by making it generic, we could now use it
     //for a boolean returning function 0 on line 32 as well. so we have 2 generic function zero as parameter.
     if (predicate) ifTrue() else ifFalse //execution of ifTrue will happen only when its called.
