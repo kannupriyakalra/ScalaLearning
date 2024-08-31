@@ -1,8 +1,8 @@
-package ScalaBasics
+package TourOfScala
 
-object TestLazyVal extends App {
+//https://tourofscala.com/scala/val-lazy-def
+object ScalaDifferenceBetweenVal_LazyVal_Def extends App {
 
-  // Learn more about Scala on https://leobenkel.com
   println("-")
   println("Starting")
 
