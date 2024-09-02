@@ -45,11 +45,12 @@ object TestFilter extends App {
 
 
 
-  // Typeclasses
+  // Typeclasses-   trait Filterable is a type class
   // Make a generic filter that works on both list and option
   // trait Filterable has a type parameter F which is higher kinded type.
   // Higher Kinded Types, F[_] is another type parameter that we have introduced and its a higher kinded type. List, Option, Array above is replaced by F.
-  // Below code is an example of adhoc polymorphism
+  // Below code is an example of adhoc polymorphism- adhoc polymorphism means doing polymorphism in an adhoc manner eg here we found commonality between list and option filterable s implementations
+  // and implemented a genericFilter.
   trait Filterable[F[_]]{
     def filterElements[A](input: F[A], predicate: A => Boolean): F[A]
 
@@ -70,7 +71,8 @@ object TestFilter extends App {
   def genericFilter[F[_], A](input: F[A], predicate: A => Boolean)(implicit filterable: Filterable[F]): F[A] =
     filterable.filterElements(input, predicate)
 
-  println(genericFilter(someOption, isEven)(optionFilterable2)) //Implicit only does type matching ie tries to find Filterable[Option] which when it found 2 it got confused so we have to explicitly put the types.
+  println(genericFilter(someOption, isEven)(optionFilterable2)) //Implicit only does type matching ie tries to find Filterable[Option] which when it found 2 it got confused so we had to explicitly
+  // pass (optionFilterable2), compiler only complains whe there are more than one option, otherwise it works implicitly like in line 77.
   println(genericFilter(someOption, greaterThanTwo)(optionFilterable2))
 
   println(genericFilter(numbers, greaterThanTwo))
