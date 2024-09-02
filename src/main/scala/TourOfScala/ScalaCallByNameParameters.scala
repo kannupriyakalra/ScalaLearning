@@ -54,6 +54,13 @@ object ScalaCallByNameParameters extends App {
   println("Congratulations ! 'Do what you have to do, until you can do what you want to do.' Oprah Winfrey")
 
 
+  //implementation of if
+  def simpleIf[A](condition: Boolean)(whenTrue: => A)(whenFalse: => A): A = {
+    if (condition) whenTrue else whenFalse
+  }
+
+  println(simpleIf(false)("a")("b"))
+
 }
 
 /*
