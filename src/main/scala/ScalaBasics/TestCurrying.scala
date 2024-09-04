@@ -25,6 +25,15 @@ object TestCurrying {
     println(z(4)) //o/p- 9
 
     val yy: Int => Int => Int = (a: Int) => (b: Int) => a + b
+
+    val curriedAdd: Int => Int => Int = toCurried(add)
+    val uncurriedAdd: (Int, Int) => Int = unCurry2(curriedAdd)
+
+    val plusOne: Int => Int = i => i + 1
+    val plusTwo: Int => Int = composedFunction(plusOne, plusOne)
+    val plusThree: Int => Int = composedFunction(plusOne, plusTwo)
+
+
   }
 
   //currying means arguments can be sent one at a time.
