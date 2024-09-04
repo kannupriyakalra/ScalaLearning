@@ -40,16 +40,15 @@ val x = add, scala compiler auto converted method add to object x.
 
   //Q1- take Function2 as input and return its curried version as output
   def toCurried[A, B, C](f2: (A, B) => C): (A => B => C) = {
-    a => b => f2(a, b) //this is a function object created , f2(a, b) gives c, a => b we wrote like this a our return type is like that.
+    a => b => f2(a, b) //this is a function 1 object created with input a and output another function , f2(a, b) gives c, a => b we wrote like this as our return type is like that.
   }
 
   // Function2[A, B, C] is equivalent (A, B) => C, A => B => C  is curried version of function2.
 
   //Q2- take curried version and return Function2.
   def unCurry2[A, B, C](fc: A => B => C): (A, B) => C = {
-    (a, b) => fc(a)(b) //this is a function, this is a function blueprint, dont think where values will come from who will implement them, think like this function is i/p, this is o/p, how to convert
-    // using a function object
-    // fc(a)(b) makes c, (a, b) we wrote like this a our return type is like that.
+    (a, b) => fc(a)(b) //this is a function blueprint, don't think where values will come from who will implement them, think like this function is i/p, this is o/p, how to convert i/p to o/p using a function object
+    // fc(a)(b) makes c, (a, b) we wrote like this as our return type is like that.
   }
 
   // a n b are given together as tuple in Function 2, first a is given then b is given in curried version.
