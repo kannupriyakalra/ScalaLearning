@@ -9,8 +9,6 @@ flatMap  is map followed by flatten. Try to replace the flatMap in the code abov
  */
 object ScalaflatMap extends App {
 
-  // Learn more about Scala on https://leobenkel.com
-
   val opt: Option[Int] = Some(1)
 
   val outOpt: Option[Int] = opt.flatMap {
