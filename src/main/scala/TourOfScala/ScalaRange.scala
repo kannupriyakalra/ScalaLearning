@@ -1,0 +1,29 @@
+package TourOfScala
+
+/*
+https://tourofscala.com/scala/range
+Scala Range
+
+Summary of the keywords:
+to: When you do 0 to 3, you will get the numbers 0, 1, 2, 3. Notice that the end boundary is included.
+until: When you do 0 until 3, you will get the numbers 0, 1, 2. Notice that the end boundary is not included.
+by: When you do 0 to 11 by 3, you will get the numbers 0, 3, 6, 9. The default value is by 1.
+ */
+object ScalaRange extends App {
+
+  val inputList1 = (0 to 50)
+  println(inputList1)
+  val result1: Int = inputList1.sum
+  val expected1: Int = 1275
+  assert(result1 == expected1, result1)
+
+  val step: Int = 3
+  val inputList2 = (0 until 20 by step).toList
+  println(inputList2)
+  val result2: Int = inputList2.length
+  val expected2: Int = 7
+  assert(result2 == expected2, result2)
+
+  println("Congratulations ! 'Happiness is when what you think, what you say, and what you do are in harmony.' - Mahatma Ghandi")
+
+}
