@@ -79,12 +79,25 @@ object ScalaFoldLeft extends App {
   val (sum, count): (Int, Int) = l.foldLeft((0, 0))((acc, a) => (acc._1 + a, acc._2 + 1))
   println("average of the list is :" + sum / count)
 
-  //implement map using foldLeft.
+  //implement map using foldLeft for a list
   def mapUsingFoldleft[A, B](l: List[A], f: A => B): List[B] = {
     l.foldLeft(List.empty[B])((acc, a) => f(a) :: acc)
   }.reverse
 
   assert(mapUsingFoldleft(l, (a: Int) => (a + 1).toString) == List("1", "4", "7", "10", "13", "16", "19"))
+
+  //implement map using foldLeft for a option
+
+  val o: Option[Int] = Some(10)
+  // println(o.foldLeft(10)((acc, o) => acc + o)) //20
+  // println(o.map(a => a + 1)) //Some(11)
+
+  def mapUsingFoldleftForOption[A, B](o: Option[A], f: A => B): Option[B] = {
+    o.foldLeft(Option.empty[B])((acc, a) => Some(f(a)))
+  }
+
+  assert(mapUsingFoldleftForOption(o, (a: Int) => (a + 1)) == Some(11))
+
 
   //implement flatMap using foldLeft.
 
@@ -94,6 +107,15 @@ object ScalaFoldLeft extends App {
 
   assert(flatMapUsingFoldleft(l, (a: Int) => List((a + 1).toString, "abc")) == List("1", "abc", "4", "abc", "7", "abc", "10", "abc", "13", "abc", "16", "abc", "19", "abc"))
 
+  //implement flatMap using foldLeft for a option
+
+  def flatMapUsingFoldleftForOption[A, B](o: Option[A], f: A => Option[B]): Option[B] = {
+    o.foldLeft(Option.empty[B])((acc, a) => f(a))
+  }
+
+  assert(flatMapUsingFoldleftForOption(o, (a: Int) => Option(a + 1)) == Some(11))
+
+
   //implement filter using foldLeft.
 
   def filterUsingFoldleft[A](l: List[A], f: A => Boolean): List[A] = {
@@ -101,5 +123,12 @@ object ScalaFoldLeft extends App {
   }.reverse
 
   assert(filterUsingFoldleft(l, a => isEven(a)) == List(0, 6, 12, 18))
+
+  //implement filter using foldLeft for a option
+  def filterUsingFoldleftForOption[A](o: Option[A], f: A => Boolean): Option[A] = {
+    o.foldLeft(Option.empty[A])((acc, a) => if (f(a)) Some(a) else None)
+  }
+
+  assert(filterUsingFoldleftForOption(o, a => isEven(a)) == Some(10))
 
 }
