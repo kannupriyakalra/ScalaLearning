@@ -75,7 +75,7 @@ object ScalaStream extends App {
     val start: Int = 1
     val takeN: Int = n
 
-    def multiply(a: Int, b: Int): Int = a * b
+    def multiply(acc: Int, a: Int): Int = acc * a
 
     LazyList
       .from(start)
