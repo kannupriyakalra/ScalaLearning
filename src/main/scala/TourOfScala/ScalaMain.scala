@@ -21,6 +21,9 @@ The args: Array[String] is where you would be able to read and use the arguments
 That is pretty much it concerning main, so I thought it would be nice to combine some of the things we've seen in the past. This SKB is using Map, object, Option, lazy val, def all into the same project. Try to play with it and make it your own.
  */
 
+// This could be named anything, try !
+object ScalaMain {
+
   object Database {
     private lazy val fakeDatabase: Map[Int, String] = Map(
       34 -> "abc",
@@ -30,19 +33,16 @@ That is pretty much it concerning main, so I thought it would be nice to combine
     def apply(key: Int): Option[String] = fakeDatabase.get(key)
   }
 
-  // This could be named anything, try !
-  object Main {
+  // Try removing or commenting this method to get familiar with the errors.
+  def main(args: Array[String]): Unit = {
+    assert(Database(12) == Some("def"))
+    assert(Database(34) == Some("abc"))
+    assert(Database(76) == None)
 
-    // Try removing or commenting this method to get familiar with the errors.
-    def main(args: Array[String]): Unit = {
-      assert(Database(12) == Some("def"))
-      assert(Database(34) == Some("abc"))
-      assert(Database(76) == None)
-
-      println(
-        "Congratulations ! 'It does not matter how slowly you go as long as you do not stop.' - Confucius"
-      )
-    }
+    println(
+      "Congratulations ! 'It does not matter how slowly you go as long as you do not stop.' - Confucius"
+    )
   }
+}
 
 
