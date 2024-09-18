@@ -37,13 +37,13 @@ object ScalaAbstractClass extends App {
   }
 
   case class Triangle(size: Int) extends Shape("Triangle", size, 3) {
-    override def area: Double = (Math.sqrt(3) / 4) * size * size
+    override lazy val area: Double = (Math.sqrt(3) / 4) * size * size
   }
 
   case class Circle(radius: Int) extends Shape("Circle", radius, 0) {
     override lazy val circumference: Double = scala.math.Pi * 2.0 * lengthOfSides //def has no arguments ie why overriden with val. , 2pie r is circumference
 
-    override def area: Double = scala.math.Pi * radius * radius
+    override lazy val area: Double = scala.math.Pi * radius * radius
   }
 
   val square: Square = Square(size = 4)
