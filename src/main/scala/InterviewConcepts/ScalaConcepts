@@ -113,3 +113,17 @@ val res72: scala.collection.mutable.ArraySeq[Int] = ArraySeq(100, 2, 3, 4)
 scala>
 
 https://docs.scala-lang.org/sips/scala-2-8-arrays.html
+
+------------------------------------------------------------
+
+8. Polymorphism in scala - important interview question
+
+https://www.baeldung.com/scala/polymorphism#:~:text=Ad%2DHoc%20Polymorphism,of%20input%20a%20method%20receives.
+https://medium.com/analytics-vidhya/type-classes-for-ad-hoc-polymorphism-in-scala-70ec31d0265d
+
+read 3-4 links
+make sheet about polymorphism examples - TestPolymorphism
+
+in some cases in scala adhoc polymorphism is achieved by higher kinded types
+revise TestHigherKindedType
+revise TestFilter
