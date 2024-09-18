@@ -33,7 +33,7 @@ object ScalaAbstractClass extends App {
   }
 
   case class Square(size: Int) extends Shape("Square", size, 4) {
-    override def area: Double = size * size
+    override lazy val area: Double = size * size
   }
 
   case class Triangle(size: Int) extends Shape("Triangle", size, 3) {
