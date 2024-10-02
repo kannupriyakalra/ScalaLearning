@@ -51,7 +51,8 @@ object ScalaRepeatedParameters extends App {
   val input: List[Int] = List(1, 3, 5)
 
   val a2: AnnoyingInput = AnnoyingInput(input)
-  val b2: NiceLookingInput = NiceLookingInput(input: _*) //here we are sending fixed no. of input at a place ie expecting variable number of input and to do this writing 'input' was important
+  val b2: NiceLookingInput = NiceLookingInput(input: _*) // here we are sending fixed no. of input at a place ie expecting variable number of input and to do this writing 'input: _*' was
+  // important as that converts List[Int] to Int*
   assert(a2.sum == b2.sum)
 
   println(
@@ -64,10 +65,16 @@ object ScalaRepeatedParameters extends App {
 
   case class Bar(b: Bar) // to construct Bar object without Bar so we can create 1st object of Bar
 
-   lazy val b: Bar = Bar(???) // ??? is of type Nothing which is a subtype of all types including Bar so can be sent as object of type Bar.
+  lazy val b: Bar = Bar(???) // ??? is of type Nothing which is a subtype of all types including Bar so can be sent as object of type Bar.
   // Subtype can be sent as a replacement of super type (Liskolv subsititution principle). We can send object of subtype where object of super type is requested.
   //This is just a hack, this code will fail at runtime as object of Nothing doesn't exist, can see that by removing lazy.
 
   val bb: Bar = Bar(bb)
   println(bb) //o/p- Bar(null) , bb was used before it was assigned (execution is Right to Left)
+
+  case class Foo2(f: List[Foo2])
+
+  Foo2(List(Foo2(List(Foo2(List()), Foo2(List()))), Foo2(List())))
+
+  // Foo* and List[Foo2] both represent 0 or more occurrences of type Foo.
 }
