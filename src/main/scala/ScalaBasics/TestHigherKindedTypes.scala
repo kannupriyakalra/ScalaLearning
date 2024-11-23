@@ -13,6 +13,8 @@ import scala.collection.LinearSeq
 // List has kind * -> *, (A -> List[A]), List is a type constructor; which means when we give a type in a list for example Int then List [Int] is made ie a concrete type is made.
 // Either has kind * -> * -> *; as either has 2 type parameter so we need them both to make a concrete type.
 // Functor has kind (* -> *) -> *
+// F[_] has kind * -> *
+// Functor[List] has kind *
 
 object TestHigherKindedTypes {
 
