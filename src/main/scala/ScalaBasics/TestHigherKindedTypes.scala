@@ -2,6 +2,18 @@ package ScalaBasics
 
 import scala.collection.LinearSeq
 
+// Every object has a type, the type of 5 is Int, "abcd" has type String.
+// What is the type of a type? its called Kind.
+// Int has kind *
+// String has kind *
+// case class Score(i: Int), Score has kind *
+// List[Int] has kind *
+
+// Higher kinded types:
+// List has kind * -> *, (A -> List[A]), List is a type constructor; which means when we give a type in a list for example Int then List [Int] is made ie a concrete type is made.
+// Either has kind * -> * -> *; as either has 2 type parameter so we need them both to make a concrete type.
+// Functor has kind (* -> *) -> *
+
 object TestHigherKindedTypes {
 
   def getFirst[A](inp: List[A]): Option[A] = inp.headOption
