@@ -31,7 +31,7 @@ object Functor {
 
 object TestFunctor extends App {
 
-  // F can be :List, Option, Future
+  // F[_] can be List, Option, Future, it cannot be Either, for that F[_,_].
   def plusOne[F[_]](input: F[Int])(implicit functor: Functor[F]): F[Int] =
     functor.map(input)(i => i + 1)
 
@@ -39,4 +39,23 @@ object TestFunctor extends App {
   println(plusOne(Option(1)))
   println(plusOne(Future(1)))
 
+  //lifts the function A => B into F's context, ie F[A] => F[B]
+  def lift[F[_], A, B](func: A => B)(implicit functor: Functor[F]): F[A] => F[B] =
+    fa => functor.map(fa)(func)
+
+  println(lift((i: Int) => i + 1)(Functor.listFunctor).apply(List(1))) //o/p- List(2)
+  println(lift[List, Int, Int]((i: Int) => i + 1).apply(List(1))) //alternative way
+
+  val listPlusOne = lift[List, Int, Int]((i: Int) => i + 1)
+  println(listPlusOne(List(1))) //alternative way
+
+  case class Score(i: Int)
+
+  val listScore: List[Int] => List[Score] =
+    lift[List, Int, Score]((i: Int) => Score(i))
+
+  val optionScore: Option[Int] => Option[Score] = lift[Option, Int, Score]((i: Int) => Score(i))
+
+  println(listScore(List(1, 2, 3))) //o/p- List(Score(1), Score(2), Score(3))
+  println(optionScore(Some(1))) //o/p- Some(Score(1))
 }
