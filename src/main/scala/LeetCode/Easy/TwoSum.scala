@@ -18,16 +18,24 @@ for each number n :
  */
 object TwoSum extends App {
 
-  //Time complexity- O(n2), Space Complexity- O(n2)
+  // Time complexity- O(n2), Space Complexity- O(n2)
   //  def twoSum(nums: Array[Int], target: Int): Array[Int] = {
   //
-  //        val result: Seq[Array[Int]] = for {
-  //          i <- (0 until nums.length)
-  //          j <- (i + 1 until nums.length)
-  //          if (nums(i) + nums(j) == target)
-  //        } yield Array(i, j)
+  //    val result: Seq[Array[Int]] = for {
+  //      i <- (0 until nums.length)
+  //      j <- (i + 1 until nums.length)
+  //      if (nums(i) + nums(j) == target)
+  //    } yield Array(i, j)
   //
-  //        result.head
+  //    //desugar:
+  ////    val result: Seq[Array[Int]] = (0 until nums.length)
+  ////      .flatMap(i =>
+  ////        (i + 1 until nums.length)
+  ////          .withFilter(j => (nums(i) + nums(j) == target))
+  ////          .map(j => Array(i, j))
+  ////      )
+  //
+  //    result.head
   //
   //  }
 
@@ -48,9 +56,10 @@ object TwoSum extends App {
   //    result.head
   //  }
 
+  // Time complexity- 3n = O(n), Space Complexity- 2n = O(n)
   def twoSum(nums: Array[Int], target: Int): Array[Int] = {
     val valuesWithIndex: Array[(Int, Int)] = nums.zipWithIndex
-    val valueIndexMap: Map[Int, Int] = nums.zipWithIndex.toMap
+    val valueIndexMap: Map[Int, Int] = valuesWithIndex.toMap
 
     val result: Seq[Array[Int]] = for {
       (value, index) <- valuesWithIndex
@@ -61,7 +70,7 @@ object TwoSum extends App {
     result.head
   }
 
-  println(twoSum(Array(2, 7, 11, 15, 2, 2), 9).mkString(" ,"))
-  println(twoSum(Array(3, 2, 4), 6).mkString(" ,"))
-  println(twoSum(Array(3, 3, 3), 6).mkString(" ,"))
+  println(twoSum(Array(2, 7, 11, 15, 2, 2), 9).mkString(","))
+  println(twoSum(Array(3, 2, 4), 6).mkString(","))
+  println(twoSum(Array(3, 3, 3), 6).mkString(","))
 }
