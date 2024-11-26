@@ -1,0 +1,62 @@
+### What is the CAP Theorem?
+
+Imagine you're running a bakery with multiple stores in different parts of a city. You want your stores to:
+1. **Always give the same information to customers** (Consistency). For example, if one store says you have 10 cakes left, all stores should say the same.
+2. **Always stay open** (Availability). Even if there’s a problem, you don’t want to turn customers away.
+3. **Handle communication problems between stores** (Partition Tolerance). Sometimes the phone lines between stores might go down, but your bakery should still work.
+
+**The CAP Theorem says you can only have 2 out of these 3 at the same time.**
+
+---
+
+### Breaking it Down
+
+#### 1. Consistency (C)
+Everyone gets the same answer, no matter which store they ask.
+- Example: If you sell a cake at one store, all other stores know immediately that there’s one less cake.
+
+#### 2. Availability (A)
+All your stores are open and responding to customers, even if there’s a problem.
+- Example: Even if the phone lines are down, every store will still sell cakes.
+
+#### 3. Partition Tolerance (P)
+Your system keeps working even if the connection between stores breaks.
+- Example: Stores can still operate independently even if they can’t talk to each other.
+
+---
+
+### The Trade-Offs
+
+When something goes wrong (like the phone lines breaking between stores), you have to choose what to prioritize:
+1. **Consistency + Partition Tolerance (CP)**:
+   - Stores won’t sell cakes until they sync up and agree on the number of cakes left.
+   - Example: Accurate but slow. Works well for banks where all transactions need to match.
+
+2. **Availability + Partition Tolerance (AP)**:
+   - Stores keep selling cakes even if they don’t know the exact number left.
+   - Example: Fast but may give slightly outdated information. Works well for shopping sites or social media.
+
+3. **Consistency + Availability (CA)**:
+   - Stores always agree and stay open, but this only works if the phone lines never break (which isn’t realistic).
+   - Example: Only practical for systems in a single location, not spread out.
+
+---
+
+### Real-Life Example
+
+Think about **online shopping**:
+- When you add an item to your cart, the system prioritizes **Availability and Partition Tolerance (AP)**. It keeps the site running and lets you shop, even if the inventory count might not be perfectly up-to-date.
+- When you transfer money in a bank, it prioritizes **Consistency and Partition Tolerance (CP)**. It makes sure the balances are correct, even if it takes a little longer.
+
+---
+
+### The Simple Rule
+
+You can’t have **everything** at once. When designing a system, decide:
+- Is accuracy (Consistency) more important?
+- Is staying open (Availability) more important?
+- Can I handle communication issues (Partition Tolerance)?
+
+CAP helps you make that choice.
+
+https://www.youtube.com/watch?v=VdrEq0cODu4
