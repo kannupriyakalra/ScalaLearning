@@ -28,6 +28,7 @@ object Functor {
 
   //set breaks functor laws ie why not made here, TBC
 
+  // extension methods on type F[A] are defined using implicit class
   implicit class FunctorOp[F[_], A](val fa: F[A]) extends AnyVal {
     def map[B](f: A => B)(implicit functor: Functor[F]): F[B] = functor.map(fa)(f)
   }
