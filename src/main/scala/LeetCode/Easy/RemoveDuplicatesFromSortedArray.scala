@@ -45,3 +45,9 @@ object RemoveDuplicatesFromSortedArray extends App {
 
 
 }
+
+/*
+Time and space complexity understanding:
+new memory allocations are costly, asking heap for memory is costly.
+in functional programming, we generally create new objects instead of mutating them, which has a cost so it increases time complexity.
+ */
