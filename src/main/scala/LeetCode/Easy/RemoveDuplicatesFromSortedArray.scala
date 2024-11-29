@@ -3,10 +3,11 @@ package LeetCode.Easy
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 object RemoveDuplicatesFromSortedArray extends App {
 
-  //time complexity = O(nlogn), space complexity = O(n)
+  //for solution 2- time complexity = O(n), space complexity = O(n)
+  //for solution 1- time complexity = O(nlogn), space complexity = O(n)
   def removeDuplicates(nums: Array[Int]): Int = {
     val ls = nums.toList //time complexity to create a list is O(n), space complexity = O(n)
-    val distinctList = removeDuplicates(ls) //time complexity = O(nlogn), space complexity = O(n)
+    val distinctList = removeDuplicates(ls)
     val size = distinctList.length //time complexity = O(n), space complexity = O(1)
 
     //populating the existing array instead of creating a new array as leetcode is not functional. Requirement of question says to mutate the array in place with distinct elements and let the extra elements stay after it.
@@ -15,18 +16,21 @@ object RemoveDuplicatesFromSortedArray extends App {
     size
   }
 
-  def removeDuplicates(input: List[Int]): List[Int] = input.toSet.toList //time complexity to create a set is O(nlogn), as you see higher time complexity element ignore the lower complexity one
+  //solution 1:
+  //time complexity = O(nlogn), space complexity = O(n)
+  //def removeDuplicates(input: List[Int]): List[Int] = input.toSet.toList //time complexity to create a set is O(nlogn), as you see higher time complexity element ignore the lower complexity one
   // and move on
 
-  //  //remove duplicates from a list using pattern match and recursion: --tbc
-  //  def removeDuplicates(input: List[Int]): List[Int] = {
-  //    input match {
-  //      case head1 :: head2 :: tail if (head1 == head2) => head1 :: removeDuplicates(tail)
-  //      case head :: tail => head :: removeDuplicates(tail)
-  //      case head :: Nil => input
-  //      case Nil => Nil
-  //    }
-  //  }
+  //solution 2:
+  //remove duplicates from a list using pattern match and recursion:
+  //time complexity = O(n), space complexity = O(n)
+  def removeDuplicates(input: List[Int], previous: Option[Int] = None): List[Int] = {
+    (previous, input) match {
+      case (None, head :: tail) => head :: removeDuplicates(tail, Some(head))
+      case (Some(value), head :: tail) => if (value == head) removeDuplicates(tail, Some(value)) else head :: removeDuplicates(tail, Some(head))
+      case (_, Nil) => Nil
+    }
+  }
 
   val array1 = Array(1, 1, 2)
   println(array1.mkString(" "))
