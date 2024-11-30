@@ -38,7 +38,6 @@ object RemoveDuplicatesFromSortedArray extends App {
   println(array1.mkString(" "))
 
   val array2 = Array(0, 0, 1, 1, 1, 2, 2, 3, 3, 4)
-
   println(array2.mkString(" ")) //o/p - Array(0, 0, 1, 1, 1, 2, 2, 3, 3, 4)
   println(removeDuplicates(array2))
   println(array2.mkString(" ")) //o/p - Array(0, 1, 2, 3, 4)
