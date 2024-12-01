@@ -29,8 +29,8 @@ object LengthOfLastWord extends App {
   //time complexity = O(n), space complexity = O(n)
   def lengthOfLastWord(s: String): Int = {
     s.reverse
-      .dropWhile(_ == ' ') //.dropWhile(c => c == ' ')
-      .takeWhile(_ != ' ')
+      .dropWhile(_ == ' ') //.dropWhile(c => c == ' '), // "   fly me   to   the moon", removed spaces
+      .takeWhile(_ != ' ') // "moon"
       .length
   }
 
