@@ -14,9 +14,9 @@ object ValidParentheses extends App {
 
   def check(input: List[Char], stack: List[Char] = Nil): Boolean = {
     input match {
-      case Nil => stack.isEmpty
-      case '(' :: tail => check(tail, '(' :: stack)
-      case '[' :: tail => check(tail, '[' :: stack)
+      case Nil => stack.isEmpty //if input list is nil and stack is empty then return true.
+      case '(' :: tail => check(tail, '(' :: stack) //step 1
+      case '[' :: tail => check(tail, '[' :: stack) //continuing the recursion means continuing list traversal.
       case '{' :: tail => check(tail, '{' :: stack)
 
       case ')' :: tail => stack match {
