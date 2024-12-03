@@ -114,3 +114,21 @@ object TestRangeAndTuple extends App{
   val l = 1 to 10
   println(l) //o/p- Range 1 to 10
 }
+
+/*
+Range is also a collection, for empty range forall returns true.
+
+scala> (1 to 10).toList
+val res0: List[Int] = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+scala> (1 to 1).toList
+val res1: List[Int] = List(1)
+
+scala> (1 to 0).toList
+val res2: List[Int] = List()
+
+scala> (1 to 0).forall(i => i == 1)
+val res3: Boolean = true
+
+
+ */
