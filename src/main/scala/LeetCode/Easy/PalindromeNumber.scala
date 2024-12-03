@@ -9,7 +9,7 @@ object PalindromeNumber extends App {
    * else false
    */
 
-  // Time complexity- O(n), Space Complexity- O(n); n = np. of digits in the integer
+  // Time complexity- O(n), Space Complexity- O(n); n = no. of digits in the integer
   def isPalindrome(x: Int): Boolean = {
 
     val str: String = x.toString
