@@ -7,6 +7,8 @@ trait Functor[F[_]] {
   def map[A, B](input: F[A])(func: A => B): F[B]
 }
 
+//Monad is used for sequencing action, this means for eg in flatMap input: F[A], assuming F = Future so Future[A] should be completed before func is applied with A from Future[A] so
+// this makes it a sequential action.
 trait Monad[F[_]] extends Functor[F] {
   def flatMap[A, B](input: F[A])(func: A => F[B]): F[B]
 
@@ -62,6 +64,8 @@ object Functor {
   // extension methods on type F[A] are defined using implicit class
   implicit class FunctorOp[F[_], A](val fa: F[A]) extends AnyVal {
     def map[B](f: A => B)(implicit functor: Functor[F]): F[B] = functor.map(fa)(f)
+
+    def flatMap[B](f: A => F[B])(implicit monad: Monad[F]): F[B] = monad.flatMap(fa)(f)
   }
 
 }
@@ -100,19 +104,25 @@ object TestFunctor extends App {
   println(listScore(List(1, 2, 3))) //o/p- List(Score(1), Score(2), Score(3))
   println(optionScore(Some(1))) //o/p- Some(Score(1))
 
-  //custom type functor:
+  //custom type functor and monad:
   case class Runs[A](i: A)
 
   implicit val runsFunctor: Functor[Runs] = new Functor[Runs] {
     override def map[A, B](input: Runs[A])(func: A => B): Runs[B] = Runs(func(input.i)) // input.i: A, func(input.i): B, Runs(func(input.i)): Runs[B]
   }
 
+  implicit val runsMonad: Monad[Runs] = new Monad[Runs] {
+    override def flatMap[A, B](input: Runs[A])(func: A => Runs[B]): Runs[B] = func(input.i)
+
+    override def pure[A](a: A): Runs[A] = Runs(a)
+  }
+
   import Functor.FunctorOp
 
   println(Runs(5).map(i => i + 1)) //o/p- Runs(6)
+  println(Runs(5).flatMap(i => Runs(i + 1))) //o/p- Runs(6)
 
   //using implicit class we added map method to Runs class.
-
 
 }
 
