@@ -7,6 +7,37 @@ trait Functor[F[_]] {
   def map[A, B](input: F[A])(func: A => B): F[B]
 }
 
+trait Monad[F[_]] extends Functor[F] {
+  def flatMap[A, B](input: F[A])(func: A => F[B]): F[B]
+
+  def pure[A](a: A): F[A]
+
+  //Implement map in terms of flatMap and pure.
+  override def map[A, B](input: F[A])(func: A => B): F[B] = flatMap(input)((a: A) => pure(func(a))) //func(a): B, pure(func(a)): F[B]
+
+}
+
+object Monad {
+  implicit val optionMonad: Monad[Option] = new Monad[Option] {
+
+    //override def flatMap[A, B](input: Option[A])(func: A => Option[B]): Option[B] = input.flatMap(func)
+    override def flatMap[A, B](input: Option[A])(func: A => Option[B]): Option[B] =
+      input match {
+        case Some(value) => func(value)
+        case None => None
+      }
+
+    override def pure[A](a: A): Option[A] = Some(a)
+
+    //not required
+    //    override def map[A, B](input: Option[A])(func: A => B): Option[B] =
+    //      input match {
+    //        case Some(value) => Some(func(value))
+    //        case None => None
+    //      }
+  }
+}
+
 object Functor {
   implicit val listFunctor: Functor[List] = new Functor[List] {
     override def map[A, B](input: List[A])(func: A => B): List[B] =
