@@ -30,6 +30,19 @@ object TestTuple extends App{
   println(tuple2._1) //o/p-3
   println(tuple2._2) //o/p-apple
 
+  //we can directly access value of tuple b as tuple is a case class
+  val (a, b) = (10, "abcd")
+  println(b) //o/p-abcd
+
+  //    //to create list of tuple from list of characters
+  //    val charList = inputString.toList
+  //    val pf: PartialFunction[List[Char], (Char, Char) ]={
+  //      case List(a, b) => (a, b)
+  //    }
+  //
+  //    val tupleList: Iterator[List[Char]] = charList.grouped(2)
+  //    val x: List[(Char, Char)] = tupleList.collect(pf).toList
+
 }
 
 //https://www.scala-exercises.org/std_lib/tuples

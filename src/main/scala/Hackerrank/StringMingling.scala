@@ -143,7 +143,7 @@ The time complexity for a recursive function that has n depth and performs an O(
 
 
 
-  //write a foldLeft solution?
+  //write a foldLeft solution?----
 
   val stdin = scala.io.StdIn
   val p = stdin.readLine

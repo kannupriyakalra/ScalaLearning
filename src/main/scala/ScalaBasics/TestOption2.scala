@@ -36,5 +36,21 @@ object TestOption2 extends App {
 
   def pair(i1: Int, i2: String): (Int, String) = (i1, i2)
 
+  var map:Map[Int, String] = Map()
+
+  def memoize(f: (Int => String)): (Int => String) = {
+
+    a => {
+      if (map.contains(a)) map(a) else {
+        val b = f(a)
+        map = map + (a,b)
+        b
+      }
+    }
+
+  }
+
+
+
 }
 

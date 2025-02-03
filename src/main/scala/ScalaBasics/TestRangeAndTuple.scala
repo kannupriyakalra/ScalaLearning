@@ -3,7 +3,7 @@ package ScalaBasics
 object TestRangeAndTuple extends App{
 
 
-  val r: Range = 1 to 1000 //equivalent to 1.to(1000), click 'Range', 'to' method and see its implementation, integer type doesnt have to method, so how we supplied here. to add methods to already
+  val r: Range = 1 to 1000 //equivalent to 1.to(1000), click 'Range', 'to' method and see its implementation, integer type doesnt have 'to' method, so how we supplied here. To add methods to already
   // constructed types like int, we use  RichInt(val self: Int) extends AnyVal with ScalaNumberProxy[Int] with RangedProxy[Int] implementation, go to intellij help- show implicit hints, it shows
   // intWrapper(1 to 1000), command click intWrapper, "implicit def intWrapper(x: Int): runtime.RichInt= new runtime.RichInt(x)" converts int to richint implicitly , richint has 'to' method ie why to method
   //could be used on 1 integer. In scala methods can be extended like this to add more methods to it. all of this could have been done explicitly too.

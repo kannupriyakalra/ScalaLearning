@@ -1,0 +1,44 @@
+/*
+CAP theorem-
+Consistency- a db has primary and secondary then any update should be made to both
+
+SOLID Principles-
+
+Big(O) Notation-
+ */
+
+
+ acdc system design- mihaela
+ stateless or stateful application
+ synchronous or asynchronous
+ caching
+
+ -alex:
+
+ migrating from microservices architecture on aws cloud on ec2 instance always running the app
+
+ aws serverless architecture- creates a lamda only when their is traffic, if you don't have traffic their is no app
+
+ api gateway- for all 4 endpoints it gets requests and forwards it to load balancer and then that sends it lamda
+
+ we get the app from s3 bucket(has .class files for app) in aws lamda
+
+ load balancer- manages load across various lamdas
+ ALB - application load balancer part of aws- called 'serverless-gateway' in aws
+
+ stateless application- acdc app doesnt make any changes to a file continuously and use and keep track of those changes
+
+ asynchronous - use futures, code isnt run line by line
+ synchronous- eg: bash , cd scripts
+
+ caching: for bin check file its cached, even for schemas (for all request for italy schemas , for 2nd request, it will resolve request in 15millisecond as schema is cached
+ how is acdc doing caching?
+
+ no database
+
+ there is and there was no api gateway colin told.
+
+ other pts-
+ tdd
+ circuit breaker design patter
+ deployment to canary and prod

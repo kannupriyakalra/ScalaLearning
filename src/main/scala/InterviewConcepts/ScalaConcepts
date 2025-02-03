@@ -90,26 +90,57 @@ list- sequential access
 vector- random access
 
 ------------------------------------------------------------
-7. does scala have immutable array? --??
+7. does scala have immutable array?
 
-scala> scala.collection.immutable.ArraySeq[Int](1,2,3,4)
-val res70: scala.collection.immutable.ArraySeq[Int] = ArraySeq(1, 2, 3, 4)
+Array is mutable in scala by definition.
+ArraySeq is immutable array, it is immutable by default and an implementation of Seq. It has a mutable version as well.
+Also, scala has concept of Vector, which is another implementation of Seq and could be thought off as an immutable array for the functionality it offers.
 
-scala> res70(0) = 100
--- [E008] Not Found Error: -----------------------------------------------------
-1 |res70(0) = 100
-  |^^^^^
-  |value update is not a member of scala.collection.immutable.ArraySeq[Int] - did you mean res70.updated?
-1 error found
+val arr: Array[Int] = Array(1, 2, 3, 4)
 
-scala> scala.collection.mutable.ArraySeq[Int](1,2,3,4)
-val res71: scala.collection.mutable.ArraySeq[Int] = ArraySeq(1, 2, 3, 4)
+val brr: Seq[Int] = arr
 
-scala> res71(0) = 100
+//brr(0) = 3//--not allowed as Seq is immutable
 
-scala> res71
-val res72: scala.collection.mutable.ArraySeq[Int] = ArraySeq(100, 2, 3, 4)
+arr(0)=3
+arr
+brr
 
-scala>
 
-https://docs.scala-lang.org/sips/scala-2-8-arrays.html
+
+//val a, b, c = 1
+//
+//a == b && b == c && c == 1
+------------------------------------------------------------
+
+8. Sealed-
+sealed means all implementations of trait are in this file only and ie why pattern match in TestOption.scala on line 42 has 2 cases only and we had the liberty to not make default case (case _), if sealed was missing
+compiler would have assumed that trait implementations could be in other files too and expected a default case in pattern match.
+
+why is not showing an error in pattern match when i removed None  from trait declaration ---HELP
+
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

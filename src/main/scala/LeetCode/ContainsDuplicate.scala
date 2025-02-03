@@ -52,10 +52,27 @@ object ContainsDuplicate extends App {
 
   // Solution 4-
 
-  //  def containsDuplicate(nums: Array[Int]): Boolean = { //time complexity = , space complexity =
-  //
-  //
-  //  }
+//    def containsDuplicate(nums: Array[Int]): Boolean = { //time complexity = O(n) , space complexity = O(n)
+//
+//      //converting array into set using foldLeft
+//      val s = nums.foldLeft(Set[Int]())((s, a) => s + a)
+//      s.size != nums.length
+//
+//    }
+
+  // Solution 5-
+
+//  def containsDuplicate(nums: Array[Int]): Boolean = { //time complexity = O(n) , space complexity = O(n)
+//
+//    //converting array into set using foldLeft while checking the duplicate found, after duplicateFound= true, no further element is added to set.
+//    val initial: (Set[Int], Boolean) = (Set(), false)
+//    val duplicateFound = (nums.foldLeft(initial) { case ((set, duplicateFound), a) =>
+//      if (duplicateFound || set.contains(a)) (set, true)
+//      else (set + a, false)
+//    })._2
+//    duplicateFound
+//
+//  }
 
   println(containsDuplicate(Array(1, 2, 3, 1)))
   println(containsDuplicate(Array(1, 2, 3, 4)))

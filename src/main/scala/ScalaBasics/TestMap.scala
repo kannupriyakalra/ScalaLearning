@@ -75,15 +75,19 @@ object TestMap extends App {
   println(n.get(7)) //o/p- None
 
 
-  val aMap = Map((1, "a"), 2 -> "b")
+  val aMap = Map((1, "a"), 2 -> "b", 4-> None)
 
   println(aMap.keys) //o/p- Set(1, 2)
   println(aMap.values) //o/p- Iterable(a, b)
   println(aMap.isEmpty) //o/p- false
   println(aMap.get(1)) //o/p- Some(a)
+  println(aMap.contains(1)) //o/p-true
+  println(aMap(1))  //o/p- a , aMap(1) is aMap.apply(1)
   println(aMap.get(3)) //o/p- None
-  println(aMap.+((3, "c"))) //Map(1 -> a, 2 -> b, 3 -> c), + means put, - means delete
-
+  println(aMap.get(4)) //o/p- Some(None)
+  //println(aMap(3)) //o/p-exception
+  println(aMap.+((3, "c")) ) //Map(1 -> a, 2 -> b, 3 -> c), + means put, - means delete
+  println(aMap.updated(5, "e") ) //Map(1 -> a, 2 -> b, 4 -> None, 5 -> e) , adding an element to Map
 
 }
 /*

@@ -2,19 +2,23 @@
 
 The purpose of these tests are to ensure that you do not break any contracts between downstream and/or upstream components your application integrates
 with. You should ensure that all integration points are tested. They are performed against the real downstream/upstream components in integration
-environment that we have separately created by replicating the production environment.
-
----check if called against stub?
+environment called int that we have separately created by replicating the production environment. We are not using stubs here.
 
 
 -------------------------------------------------------
 2. difference between unit test and functional test.
 
+unit test- we are not deploying the app in any env, application doesnt even run locally, they dont depend on app to run, stubbed downstream
+functional- application needs to be deployed and run, stubbed downstream
+integration- real downstream
+
 functional testing checks the software's functionality from the user's perspective,
 while unit testing checks the software's internal workings from the developer's perspective.
 
-Functional testing is a black-box technique that does not require access to the source code,-----check?
-while unit testing is a white-box technique that requires access to the source code.
+Functional testing is a black-box technique that does not require access to the source code, means testing by calling application endpoints
+while unit testing is a white-box technique that requires access to the source code, means testing by running the test code
+
+we never run app on jenkins slave, we run unit tests on it.
 
 Functional testing is usually done by testers, while unit testing is usually done by developers.
 Functional testing is performed during the level of application testing, while unit testing is performed during the software development cycle.
@@ -30,15 +34,24 @@ Source: Conversation with Bing, 8/1/2024
 (5) Unit Testing vs. Functional Testing: In-Depth Comparison - Bright Security. https://brightsec.com/blog/unit-testing-vs-functional-testing/.
 (6) Difference between Functional Testing and Unit Testing. https://www.browserstack.com/guide/difference-between-functional-testing-and-unit-testing.
 
+
+function mocking -mockito
+rest api mocking - wiremock stubbing
 -------------------------------------------------------
 
 3. difference between acceptance test and functional test.
 
 No, acceptance testing and functional testing are not the same. They have different purposes, scopes, and audiences. 😊
 
-Acceptance testing is a validation activity that checks whether the software meets the customer's needs and expectations. It is usually done by the customer or a representative of the customer, such as a product owner. Acceptance testing focuses on the end-user's perspective and the business requirements. It is performed on a production-like environment and uses realistic scenarios and data. Acceptance testing helps to ensure that the software is fit for use and ready for delivery. ¹²
+Acceptance testing is a validation activity that checks whether the software meets the customer's needs and expectations. It is usually done by the customer or a representative of the customer,
+such as a product owner. Acceptance testing focuses on the end-user's perspective and the business requirements. It is performed on a production-like environment and uses realistic scenarios and
+ data. Acceptance testing helps to ensure that the software is fit for use and ready for delivery. ¹²
 
-Functional testing is a verification activity that checks whether the software performs the functions that it is supposed to do. It is usually done by the developers or testers of the software. Functional testing focuses on the software's perspective and the technical specifications. It is performed on various levels of testing, such as unit, integration, system, and regression. It uses test cases that cover all the possible inputs, outputs, and behaviors of the software. Functional testing helps to find defects and errors in the software's functionality. ¹²
+ We are not doing acceptance testing in njp as all our apps are middleware applications.
+
+Functional testing is a verification activity that checks whether the software performs the functions that it is supposed to do. It is usually done by the developers or testers of the software.
+ Functional testing focuses on the software's perspective and the technical specifications. It is performed on various levels of testing, such as unit, integration, system, and regression.
+ It uses test cases that cover all the possible inputs, outputs, and behaviors of the software. Functional testing helps to find defects and errors in the software's functionality. ¹²
 
 I hope this answer helps you understand the difference between acceptance testing and functional testing. If you want to learn more about these testing types, you can read [this article](^1^) or [this question](^2^). If you have any other questions, feel free to ask me. 😊
 
@@ -52,7 +65,7 @@ Source: Conversation with Bing, 8/1/2024
 
 -------------------------------------------------------
 
-4. regression testing -------are we doing this? this is a process always done.?
+4. regression testing -------yes we are doing but for unit testing we are doing it manually for all other tests we have automated it using jenkins.
 
 In the above context, regression means a situation where a change in the code causes a previously working functionality to fail or behave incorrectly.
  Regression testing is a technique to prevent or detect such regressions by re-running existing tests after code changes. ¹²
@@ -64,3 +77,5 @@ Source: Conversation with Bing, 8/1/2024
 (4) Understanding the Role of Regression Testing - Spiceworks. https://www.spiceworks.com/tech/devops/articles/what-is-regression-testing/.
 
 -------------------------------------------------------
+
+what is the tool for checking unit test coverage -scoverage

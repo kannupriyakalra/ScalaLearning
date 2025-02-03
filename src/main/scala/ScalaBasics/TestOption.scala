@@ -2,13 +2,13 @@ package ScalaBasics
 
 /*
 -explored Option, for comprehension(4 ways)
--created our own option, Option's methods getOrElse, map. understand their implementation by comparing to inbuilt getOrElse, map s implementation s.
+-implement our own Option, Option's methods getOrElse, map. Understand their implementation by comparing to inbuilt getOrElse, map s implementation s.
  */
 object TestOption {
   //implement our own option, Option's methods getOrElse, map.
   sealed trait MyOption[+A] {
     def getOrElse[B >: A](b: B): B //if there is a value in option then get that else here is the default value i am giving ie b and ie why return type is B which is common super type of A and B and
-  // get means value a in line 21 of this function definition. getOrElse is a safe method, that either gives value or return default value
+    // get means value a in line 18 of this function definition. getOrElse is a safe method, that either gives value or return default value.
 
     def map[B](f: A => B): MyOption[B] //map method converts MyOption[+A] to MyOption[B] using function f is of type A to B. map can only be called on object of type MyOption as we are implementing this
     //map for Option types
@@ -20,7 +20,7 @@ object TestOption {
     // mentioned constrained between A and B. B is supertype of A so we could return value of type A, getOrElse can either return a or b so return type has to be a common supertype of both ie B.
 
     override def map[B](f: A => B): MyOption[B] = MySome[B](f(a)) // we used f function which is argument of map to convert a:A to B by calling it on a, as the required return type for map is MyOption[B],
-// we create the object of MySome[A] by using the constructor of MySome class, to convert f(a): B to Option[B]. MyOption is a trait so to return it as a type parameter we used its implementation MySome.
+    // we create the object of MySome[A] by using the constructor of MySome class, to convert f(a): B to Option[B]. MyOption is a trait so to return it as a type parameter we used its implementation MySome.
     // MyOption is a non leaf node type, so if we need a object of its type we have to either give object of MySome or MyNone as object can be created for only terminal types ie concrete class, trait
     // is not a terminal/leaf node type.
   }
@@ -56,10 +56,10 @@ object TestOption {
     }
     println(y.getOrElse(5)) //o/p-5
 
-//    val zz = MySome(10) //zz is object of MySome class
-//    zz.a = 11 // content inside zz ie a can be changed as we made MySome mutable above in line 15 by making a as var, despite zz being immutable in line 57 with a val.
-//    // bydefault a is val in case class, case class is usually immutable.
-//    println(zz) // o/p- MySome(11) and not 11 as its a case class which has tostring defined inside so it prints whole object.
+    //    val zz = MySome(10) //zz is object of MySome class
+    //    zz.a = 11 // content inside zz ie a can be changed as we made MySome mutable above in line 15 by making a as var, despite zz being immutable in line 57 with a val.
+    //    // bydefault a is val in case class, case class is usually immutable.
+    //    println(zz) // o/p- MySome(11) and not 11 as its a case class which has tostring defined inside so it prints whole object.
     /*
     when in line 15 we make "a" as var ie "case class MySome[A](var a: A) extends MyOption[A] { " , uncomment above code and run, then we can change the value of a inside MySome by zz.a = 11
      */
@@ -67,21 +67,22 @@ object TestOption {
     //val zz = z is not allowed as zz is a val
 
     val z: Option[Int] = Some(10) // z has Some(10) in it as its type is Option[Int] and not 10 which is when type is int.
-    val z1: Option[Int] = z.map(t => t + 1) // Why t is 10 and not Some(10)?---t is type A, t+1 is type B, map is A to B, here z=Some(10) so type A is int ie 10 so t is int and t+1 is int and not
-    // Option[Int] or Some(10)
+    val z1: Option[Int] = z.map(t => t + 1) // Why t is 10 and not Some(10)?---t is type A, t+1 is type B, map is A to B, here z=Some(10) so type A is
+    // int ie 10 so t is int and t+1 is int and not Option[Int] or Some(10)
     println(z1) //o/p- Some(11), if val z: Option[Int] = None, o/p- None as per implementation on line 34 of map
     println(z.map(n => "value = " + n.toString)) //o/p- Some(value = 10)
     println {
       z.map(t => t + 1)
         .map(t => t * 2)
         .map(t => t.toString) //o/p- Some(22)
-    }//map is used for doing int computations for Option, List datatypes
+    } //map is used for doing int computations for Option, List datatypes
 
-    val f: Int => Double = t => t/0.3
+    val f: Int => Double = t => t / 0.3
+    val result: Option[Double] = z.map(f)
     println(z.map(f)) //o/p-Some(33.333333333333336)
-    println(z map f) //o/p-Some(33.333333333333336) //shortform of line 77
+    println(z map f) //o/p-Some(33.333333333333336) //shortform of line 82
 
-    val g: Int => Double = _/0.3 //shortform of line 76
+    val g: Int => Double = _ / 0.3 //shortform of line 80
     println(z.map(g)) //o/p-Some(33.333333333333336)
     println(z map g) //o/p-Some(33.333333333333336)
 
@@ -89,16 +90,26 @@ object TestOption {
     println(z map ff) //o/p-Some(33.333333333333336)
 
     val z2: Option[Int] = z.flatMap(t => Some(t + 1))
-    println("example of flatMap "+ z2) //o/p- example of flatMap Some(11)
+    println("example of flatMap " + z2) //o/p- example of flatMap Some(11)
 
     val z3 = z.getOrElse(-1)
-    println("example of getOrElse- get case "+ z3) //o/p- example of getOrElse- get case 10 , z3: Int and not Option[Int]
+    println("example of getOrElse- get case " + z3) //o/p- example of getOrElse- get case 10 , z3: Int and not Option[Int]
 
     //get is a unsafe method as it gives exception in case of none and breaks code, so we made a safe method getOrElse where else gives default value.
 
     val ze = None
     val z4 = ze.getOrElse(-1)
-    println("example of getOrElse- else case "+ z4) //o/p- example of getOrElse- else case -1
+    println("example of getOrElse- else case " + z4) //o/p- example of getOrElse- else case -1
+
+    //using pattern match to add 2 options
+    val answer = z match {
+      case Some(v1) =>
+        z1 match {
+          case Some(v2) => Some(v1 + v2)
+          case None => None
+        }
+      case None => None
+    }
 
     val v: Option[Int] = for { //adding 2 options
       v1 <- z //v1 in z ie 10, extracts the value to add
@@ -115,7 +126,7 @@ object TestOption {
 
     println("for comprehension desugar u: " + u) //o/p- for comprehension desugar u: Some(21)
 
-    val s = optionCombine1(z, z1, (a: Int, b: Int) => a + b)  //equivalent to line 101, 109, 118
+    val s = optionCombine1(z, z1, (a: Int, b: Int) => a + b) //equivalent to line 101, 109, 118
     println("optionCombine1 " + s) //o/p-optionCombine1 Some(21)
     val t = optionCombine2(z, z1, (a: Int, b: Int) => a + b)
     println("optionCombine2 " + t) //o/p-Some(21) optionCombine2 Some(21)
@@ -137,15 +148,15 @@ object TestOption {
 
   }
 
-  def ff(i: Int): Double = i/0.3
+  def ff(i: Int): Double = i / 0.3
 
   def optionCombine1[A, B, C](aopt: Option[A], bopt: Option[B], f: (A, B) => C): Option[C] = for {
     v1 <- aopt
     v2 <- bopt
   } yield f(v1, v2)
 
-  def optionCombine2[X, Y, Z](aopt: Option[X], bopt: Option[Y], f: (X, Y) => Z): Option[Z] = aopt.flatMap((v1: X) => bopt.map((v2: Y) => f(v1, v2): Z): Option[Z] )
-//flatmap ki defination me A is option k andar ka type so flatmap takes option k andar ka type and convert it into another option[B], aopt.flatMap(x => Option[Z])
+  def optionCombine2[X, Y, Z](aopt: Option[X], bopt: Option[Y], f: (X, Y) => Z): Option[Z] = aopt.flatMap((v1: X) => bopt.map((v2: Y) => f(v1, v2): Z): Option[Z])
+  //flatmap ki defination me A is option k andar ka type so flatmap takes option k andar ka type and convert it into another option[B], aopt.flatMap(x => Option[Z])
 
 }
 
@@ -177,9 +188,7 @@ override- means the function with override keyword s definition will be used irr
 final- method cannot be overidden
 Map- is dictionary , they are same thing
 
-Sealed-
-sealed means all implementations of trait are in this file only and ie why pattern match on line 49 has 2 cases only and default case (case _) we had the liberty to not make, if sealed was missing
-compiler would have assumed that trait implementations could be in other files too and expected a default case in pattern match.
+
 
 Functor-
 map function helps convert universe of type A to a universe of type where all types are wrapped in Option so all types like List, Future, Either, Option, etc which define map are called Functors.
@@ -199,7 +208,7 @@ exist in scala only and they make the language structured and predictable.- sign
 //Option and either are inbuilt classes and we created them here to understand scala concepts.
 
 map n flatmap implementations of option understood:
-doubt: 1.	testOption.scala  Line 109, why is output some(21), isn’t o/p of map some(21) so flatmap o/p?
+doubt: 1.	TestOptionRevision.scala  Line 109, why is output some(21), isn’t o/p of map some(21) so flatmap o/p?
 
 final def map[B](f: A => B): Option[B]
 Returns a Some containing the result of applying f to this Option's value if this Option is nonempty. Otherwise return None.
@@ -247,7 +256,7 @@ This is equivalent to:
    def apply[A](x: A): Option[A] = if (x == null) None else Some(x)
 
 doubt:
-1.	testOption.scala  Line 101, why is output some(21)—as its Option s for
+1.	TestOptionRevision.scala  Line 101, why is output some(21)—as its Option s for
 
 to change values inside a option (to do operations like addition etc) we give it a function like map, flatmap that changes the value inside option but option wrapper remain, to break option wrapper
  we use pattern matching as in that we get value as o/p for the pattern matched and not Option(value).

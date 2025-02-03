@@ -81,6 +81,13 @@ where default case is written first, o/p will be "Unknown list"
     case List(_, 2, _) => "List containing 2 on its 2nd position"
   }
    */
+
+  //example of pattern match
+  case class Human(a: Int)
+
+  val obj = Human(10)
+  val Human(z) = obj
+  println(z) //o/p- 10
 }
 
 

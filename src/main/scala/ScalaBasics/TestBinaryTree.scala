@@ -94,6 +94,9 @@ recursion will be called on left and further on its left n right and when all 3 
 
 height - longest path from the node to a leaf node, height is wrt leaf node
 depth- number of edges from the root to the node, depth is wrt root node
+diameter (or width) of a tree is the number of nodes on the longest path between any two leaf nodes. The tree below has a diameter of 6 nodes.
+https://stackoverflow.com/questions/2603692/what-is-the-difference-between-depth-and-height-in-a-tree
+
 
 A binary tree is a tree data structure in which each parent node can have at most two children. Each node of a binary tree consists of three items:
 1-data item
@@ -101,4 +104,5 @@ A binary tree is a tree data structure in which each parent node can have at mos
 3-address of right child
 
 https://www.programiz.com/dsa/trees
+
  */
