@@ -53,8 +53,8 @@ object TestMonoid extends App {
     override def combine(first: Int, second: Int): Int = first * second
   }
 
-  println(reduce(List(2, 2, 2, 2))) //first reduce method looks for implicit parameter within object TestMonoid and if it can't find a Monoid[Int] there, it finds it in
-  //companion object and used additionIntMonoid instead.
+  println(reduce(List(2, 2, 2, 2))) //first reduce method looks for implicit parameter within object TestMonoid which is multiplicationIntMonoid and if it can't find a Monoid[Int] there, it finds it in
+  //companion object and used additionIntMonoid instead. Basically, compiler looks for implicit parameter in the scope of the function and if it can't find it there, it looks for it in the companion object of the type.
   println(reduce(List("2", "2", "2", "2")))
 
   //monoid for user defined types:
@@ -68,17 +68,17 @@ object TestMonoid extends App {
     }
   }
 
-  println(reduce(List(Score(2), Score(3), Score(4), Score(5)))) //o/p- Score(14)
+  println(reduce[Score](List(Score(2), Score(3), Score(4), Score(5)))) //o/p- Score(14)
 
-  println(reduce(List(List(1, 2), List(3), List(4), List(5)))) //o/p- List(1, 2, 3, 4, 5)
-  println(reduce(List(List("1", "2"), List("3"), List("4"), List("5")))) //o/p- List(1, 2, 3, 4, 5)
-  println(reduce(List(List(Score(2), Score(3)), List(Score(4), Score(5))))) //o/p- List(Score(2), Score(3), Score(4), Score(5)) //as type A in reduce is List[Score] ie why the o/p is
+  println(reduce[List[Int]](List(List(1, 2), List(3), List(4), List(5)))) //o/p- List(1, 2, 3, 4, 5)
+  println(reduce[List[String]](List(List("1", "2"), List("3"), List("4"), List("5")))) //o/p- List(1, 2, 3, 4, 5)
+  println(reduce[List[Score]](List(List(Score(2), Score(3)), List(Score(4), Score(5))))) //o/p- List(Score(2), Score(3), Score(4), Score(5)) //as type A in reduce is List[Score] ie why the o/p is
   // of type A ie List[Score] as per definition of reduce method.
-  println(reduce(reduce(List(List(Score(2), Score(3)), List(Score(4), Score(5)))))) //o/p- Score(14)
+  println(reduce[Score](reduce[List[Score]](List(List(Score(2), Score(3)), List(Score(4), Score(5)))))) //o/p- Score(14)
 
 
-  println(reduce(List(Set(1, 2), Set(3), Set(4), Set(5))))
-  println(reduce(List(Set("1", "2"), Set("3"), Set("4"), Set("5"))))
+  println(reduce[Set[Int]](List(Set(1, 2), Set(3), Set(4), Set(5))))
+  println(reduce[Set[String]](List(Set("1", "2"), Set("3"), Set("4"), Set("5"))))
 
   case class Runs[A](i: A)
 
@@ -88,19 +88,21 @@ object TestMonoid extends App {
     implicit def runsMonoid[A](implicit monoid: Monoid[A]): Monoid[Runs[A]] = new Monoid[Runs[A]] {
       override def empty: Runs[A] = Runs(monoid.empty)
 
-      override def combine(first: Runs[A], second: Runs[A]): Runs[A] = Runs[A](monoid.combine(first.i, second.i))
+      override def combine(first: Runs[A], second: Runs[A]): Runs[A] = Runs[A](monoid.combine(first.i, second.i)) //monoid.combine is used here as we need to combine 2 values of type A
+      // and its return type is A. first.i and second.i are of type A.
     }
 
   }
 
-  println(reduce(List(Runs(2), Runs(3), Runs(4), Runs(5)))) //Type A = Runs[Int], for Monoid[Runs[Int]] we need Monoid[Int] implicitly.
-  println(reduce(List(Runs("2"), Runs("3"), Runs("4"), Runs("5"))))
+  println(reduce[Runs[Int]](List(Runs(2), Runs(3), Runs(4), Runs(5)))) //Type A = Runs[Int], for Monoid[Runs[Int]] we need Monoid[Int] implicitly.
+  //reduce function is called with type A = Runs[Int] and Monoid[Runs[Int]] is needed, so it looks for Monoid[Runs[Int]] in the companion object of Runs[Int] which is Runs object.
+  println(reduce[Runs[String]](List(Runs("2"), Runs("3"), Runs("4"), Runs("5"))))
 
-  println(reduce(List(Runs(Runs(2)), Runs(Runs(3)))))
+  println(reduce[Runs[Runs[Int]]](List(Runs(Runs(2)), Runs(Runs(3)))))//o/p- Runs(Runs(6))
   //for runsMonoid function if input is of type Monoid[Int] => Monoid[Runs[Int]],
   //if input is of type Monoid[Runs[Int]] => Monoid[Runs[Runs[Int]]]
 
-  println(reduce(List(Runs(Runs(Runs(2))), Runs(Runs(Runs(3))))))
+  println(reduce[Runs[Runs[Runs[Int]]]](List(Runs(Runs(Runs(2))), Runs(Runs(Runs(3)))))) //o/p- Runs(Runs(Runs(6)))
 
 }
 
