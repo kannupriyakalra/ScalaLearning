@@ -1,7 +1,11 @@
 package ScalaBasics
 
+import ScalaBasics.TestMonoid.Runs
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+
+//Functor is a type class, it is a way to achieve adhoc polymorphism in Scala. Functor is a type class that defines a map method.
 
 trait Functor[F[_]] {
   def map[A, B](input: F[A])(func: A => B): F[B]
@@ -41,11 +45,14 @@ object Monad {
 }
 
 object Functor {
+
+  //list has a functor instance. List has an instance of Functor type class.
   implicit val listFunctor: Functor[List] = new Functor[List] {
     override def map[A, B](input: List[A])(func: A => B): List[B] =
       input.map(func)
   }
 
+  //option has a functor instance.
   implicit val optionFunctor: Functor[Option] = new Functor[Option] {
     override def map[A, B](input: Option[A])(func: A => B): Option[B] =
       input match {
@@ -54,10 +61,12 @@ object Functor {
       }
   }
 
+  //future has a functor instance.
   implicit val futureFunctor: Functor[Future] = new Functor[Future] {
     override def map[A, B](input: Future[A])(func: A => B): Future[B] =
       input.map(func)
   }
+
 
   //set breaks functor laws ie why not made here, TBC
 
@@ -77,10 +86,11 @@ object TestFunctor extends App {
   def plusOne[F[_]](input: F[Int])(implicit functor: Functor[F]): F[Int] =
     functor.map(input)(i => i + 1)
 
-  //plusOne is an example of adhoc polymorphism, works with unrelated types.
+  //plusOne is an example of adhoc polymorphism, works with unrelated types like List, Option, Future.
   println(plusOne(List(1)))
   println(plusOne(Option(1)))
   println(plusOne(Future(1)))
+
 
   //lifts the function A => B into F's context, ie F[A] => F[B].
   def lift[F[_], A, B](func: A => B)(implicit functor: Functor[F]): F[A] => F[B] =
@@ -88,10 +98,10 @@ object TestFunctor extends App {
 
   println((lift((i: Int) => i + 1)(Functor.listFunctor)).apply(List(1))) //o/p- List(2) //return type of lift is F[A] => F[B] and on that apply is called which is a Function1 and to that
   // we gave List(1) as input.
-  println(lift[List, Int, Int]((i: Int) => i + 1).apply(List(1))) //alternative way, as type parameters are mentioned ie why it took functor implicitly.
+  println(lift[List, Int, Int]((i: Int) => i + 1).apply(List(1))) //2nd alternative way, as type parameters are mentioned ie why it took functor implicitly.
 
-  val listPlusOne: List[Int] => List[Int] = lift[List, Int, Int]((i: Int) => i + 1)
-  println(listPlusOne(List(1))) //alternative way
+  val listPlusOne: List[Int] => List[Int] = lift[List, Int, Int]((i: Int) => i + 1) //3rd alternative way
+  println(listPlusOne(List(1)))
   println(listPlusOne.apply(List(1))) //alternative way
 
   case class Score(i: Int)
@@ -123,6 +133,10 @@ object TestFunctor extends App {
   println(Runs(5).flatMap(i => Runs(i + 1))) //o/p- Runs(6)
 
   //using implicit class we added map method to Runs class.
+  /*
+  FunctorOp(Runs(5)) is the object of FunctorOp class, on that map method is called. runsMonad could go as implicit input as trait Monad extends Functor.
+  If you comment runsMonad then you can see runsFunctor would go as implicit input.
+   */
 
 }
 
