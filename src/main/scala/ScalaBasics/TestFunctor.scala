@@ -117,6 +117,7 @@ object TestFunctor extends App {
   //custom type functor and monad:
   case class Runs[A](i: A)
 
+  //Runs has a functor instance.
   implicit val runsFunctor: Functor[Runs] = new Functor[Runs] {
     override def map[A, B](input: Runs[A])(func: A => B): Runs[B] = Runs(func(input.i)) // input.i: A, func(input.i): B, Runs(func(input.i)): Runs[B]
   }
