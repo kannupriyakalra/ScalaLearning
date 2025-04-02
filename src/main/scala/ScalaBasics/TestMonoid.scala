@@ -1,5 +1,6 @@
 package ScalaBasics
 
+//Adhoc polymorphism is achieved using type classes in Scala. Monoid is a type class.
 //monoid is a way to combine 2 values, to combine 2 values we need a default value and an operator.
 trait Monoid[A] {
   def empty: A
@@ -8,7 +9,7 @@ trait Monoid[A] {
 
 }
 
-//monoid instances for various types:
+//monoid instances for various types created in companion object of Monoid trait:
 object Monoid {
   implicit val additionIntMonoid: Monoid[Int] = new Monoid[Int] {
     override def empty: Int = 0
@@ -80,6 +81,7 @@ object TestMonoid extends App {
   println(reduce[Set[Int]](List(Set(1, 2), Set(3), Set(4), Set(5))))
   println(reduce[Set[String]](List(Set("1", "2"), Set("3"), Set("4"), Set("5"))))
 
+  //monoid for generic type and nested types:
   case class Runs[A](i: A)
 
   case object Runs {
