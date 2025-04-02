@@ -38,6 +38,38 @@ object Monoid {
 
 }
 
+trait Foldable[F[_]] {
+  def fold[A, B](input: F[A])(initial: B)(func: (B, A) => B): B
+}
+
+object Foldable {
+  implicit val listFoldable: Foldable[List] = new Foldable[List] {
+    override def fold[A, B](input: List[A])(initial: B)(func: (B, A) => B): B =
+      input.foldLeft(initial)(func)
+  }
+
+  implicit val optionFoldable: Foldable[Option] = new Foldable[Option] {
+    override def fold[A, B](input: Option[A])(initial: B)(func: (B, A) => B): B =
+      input match {
+        case Some(value) => func(initial, value)
+        case None => initial
+      }
+  }
+
+  implicit val setFoldable: Foldable[Set] = new Foldable[Set] {
+    override def fold[A, B](input: Set[A])(initial: B)(func: (B, A) => B): B =
+      input.foldLeft(initial)(func)
+  }
+
+  //extension method
+  implicit class FoldableOps[F[_], A](input: F[A]) {
+    def fold[B](initial: B)(func: (B, A) => B)(implicit foldable: Foldable[F]): B =
+      foldable.fold(input)(initial)(func)
+  }
+
+}
+
+
 object TestMonoid extends App {
 
   //reduce here is an example of adhoc polymorphism as reduce function can be used with different behaviours which are addition and multiplication monoid.
@@ -94,17 +126,50 @@ object TestMonoid extends App {
       // and its return type is A. first.i and second.i are of type A.
     }
 
+    //implicit def runsFoldable[A](implicit foldable: Foldable[])
   }
 
   println(reduce[Runs[Int]](List(Runs(2), Runs(3), Runs(4), Runs(5)))) //Type A = Runs[Int], for Monoid[Runs[Int]] we need Monoid[Int] implicitly.
   //reduce function is called with type A = Runs[Int] and Monoid[Runs[Int]] is needed, so it looks for Monoid[Runs[Int]] in the companion object of Runs[Int] which is Runs object.
   println(reduce[Runs[String]](List(Runs("2"), Runs("3"), Runs("4"), Runs("5"))))
 
-  println(reduce[Runs[Runs[Int]]](List(Runs(Runs(2)), Runs(Runs(3)))))//o/p- Runs(Runs(6))
+  println(reduce[Runs[Runs[Int]]](List(Runs(Runs(2)), Runs(Runs(3))))) //o/p- Runs(Runs(6))
   //for runsMonoid function if input is of type Monoid[Int] => Monoid[Runs[Int]],
   //if input is of type Monoid[Runs[Int]] => Monoid[Runs[Runs[Int]]]
 
   println(reduce[Runs[Runs[Runs[Int]]]](List(Runs(Runs(Runs(2))), Runs(Runs(Runs(3)))))) //o/p- Runs(Runs(Runs(6)))
+
+  case class Triple[A](i: A, j: A, k: A)
+
+  object Triple{
+
+    //foldable instance for Triple
+    implicit def tripleFoldable[A]: Foldable[Triple] = new Foldable[Triple] {
+      override def fold[A, B](input: Triple[A])(initial: B)(func: (B, A) => B): B =
+        func(func(func(initial, input.i), input.j), input.k)
+    }
+  }
+
+  val tripleObject: Triple[Int] = Triple(1, 2, 3)
+
+  import Foldable.FoldableOps
+  println(tripleObject.fold(0)((acc, i) => acc + i)) //o/p- 6
+
+  def reduce2[F[_], A](input: F[A])(implicit monoid: Monoid[A], foldable: Foldable[F]): A =
+    input.fold(monoid.empty)(monoid.combine)
+
+  println(reduce2(List(1, 2, 3, 4, 5))) //o/p- 120
+  println(reduce2(tripleObject))
+  println(reduce2(Set(1, 2, 3, 4, 5)))
+
+  println(reduce2(Set("1", "2", "3", "4", "5")))
+  println(reduce2(List(Score(2), Score(3), Score(4), Score(5))))
+  println(reduce2(List(List(1, 2), List(3), List(4), List(5))))
+
+  println(reduce2(List(List("1", "2"), List("3"), List("4"), List("5"))))
+  println(reduce2(List(List(Score(2), Score(3)), List(Score(4), Score(5)))))
+  println(reduce2(Option(1)))
+
 
 }
 
