@@ -12,7 +12,7 @@ object FilterArray {
     }
   }
 
-  //Alternate Solution- 2
+  //Alternate Solution- 2 this is generic and can be used for any type of List and its inputs are a list and a function.
   def myFilter[A](l: List[A])(f: A => Boolean): List[A] = {
     l match {
       case ::(head: A, next: List[A]) => if (f(head)) head :: myFilter(next)(f) else myFilter(next)(f)
