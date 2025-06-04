@@ -2,29 +2,38 @@ package Hackerrank
 
 //https://www.hackerrank.com/challenges/fp-filter-positions-in-a-list/problem?isFullScreen=true
 object FilterPositionsInAList {
+
+  // in question we are told to remove odd positioned elements from a list, as in list we start index from 0, so we need to remove elements at even index.
   def f(ls: List[Int]): List[Int] = {
-    f2(ls, 0)
+    functionToRemoveElements(ls, 0)
   }
 
-  def f2(ls: List[Int], idx: Int): List[Int] = {
+  def functionToRemoveElements(ls: List[Int], idx: Int): List[Int] = {
     ls match {
-      case ::(head, next) => if (idx % 2 == 0) f2(next, idx + 1) else head :: f2(next, idx + 1) //complexity is O(n) as list is traversed once
+      case ::(head, next) => if (idx % 2 == 0) functionToRemoveElements(next, idx + 1) else head :: functionToRemoveElements(next, idx + 1) //complexity is O(n) as list is traversed once
       case Nil => Nil
     }
   }
 
-  //alternate way 2-
-  def f0(ls: List[Int]): List[Int] = {
-    ls match {
-      case ::(head, next) => if (ls.indexOf(head) % 2 == 0) f(next) else head :: f(next) //complexity is O(n2) if we use indexOf as complexity of indexOf is O(n) and complexity of traversing list is O(n)
-      case Nil => Nil
-    }
+  //alternate way 2- in this approach we are using pattern matching to match 2 elements at a time, and then recursively calling the function on the tail of the list.
+  def f0(ls: List[Int]): List[Int] = ls match {
+    case _ :: second :: tail => second :: f0(tail)
+    case _ => Nil
   }
+
+  //Time complexity is O(n) as we are traversing the list once, and for each element we are doing constant time work (adding to result list).
 
   //alternate way 3-
 
-  def f3(ls: List[Int]): List[Int] = ls.zipWithIndex.filter { case (value, index) => index % 2 != 0 }.map(_._1)  //Time complexity is O(n)= ls.zipWithIndex is O(n), then for filter is O(n), then for map is  O(n) = O(n) + O(n) + O(n) = 3 O(n) = O(n)
-  //map(_._1) is map(x:(Int,Int) =>x._1)
+  def f3(ls: List[Int]): List[Int] = ls.zipWithIndex.filter { case (value, index) => index % 2 != 0 }.map(_._1)
+
+  //Time complexity is O(n)= ls.zipWithIndex is O(n), then for filter is O(n), then for map is O(n) = O(n) + O(n) + O(n) = 3 O(n) = O(n)
+
+  //explanation:
+  //zipWithIndex creates a list of tuples, where each tuple contains the element and its index in the original list.
+  //  val a: List[(Int, Int)] = List(2, 5, 3, 4, 6, 7, 9, 8).zipWithIndex
+  //  a.foreach(println)  //Output: List((2,0), (5,1), (3,2), (4,3), (6,4), (7,5), (9,6), (8,7))
+  // map(_._1) is map(x:(Int,Int) =>x._1)
 
   //alternate way 4-
 
@@ -32,6 +41,8 @@ object FilterPositionsInAList {
     .foldLeft(0, Nil: List[Int]) { case ((idx, resultList), a) => (idx + 1, if (idx % 2 == 0) resultList else a :: resultList) }
     ._2
     .reverse
+
+  //Time complexity is O(n) as we are traversing the list once, and for each element we are doing constant time work (adding to result list).
 
   /*
  - on List(2, 5, 3, 4, 6, 7, 9, 8) foldLeft is applied from left to right with z is of type tuple (0, Nil: List[Int]),
@@ -60,13 +71,19 @@ object FilterPositionsInAList {
     ._2
     .reverse
 
+  // Here we are using foldLeft to iterate over the list, where acc is a tuple containing the current index and the result list. a is each element of the list.
+  // As we iterate, we increment the index and conditionally add the element to the result list based on whether the index is even or odd.
+  // Finally, we reverse the result list to maintain the original order of elements. Reverse is done as in list elements are added to the front of the list, so we need to reverse it
+  // at the end to get the correct order.
 
   def main(args: Array[String]): Unit = {
 
-    //f0(List(0, 1, 2, 3, 4, 5, 6, 7)).foreach(println)
+    // f0(List(0, 1, 2, 3, 4, 5, 6, 7)).foreach(println)
     f(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
     // f3(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
    // f4(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println)
+   // f5(List(2, 5, 3, 4, 6, 7, 9, 8)).foreach(println) //o/p: List(5, 4, 7, 8)
+
 
   }
 }
